@@ -1,0 +1,682 @@
+/* global React, SERVICES, FadeIn */
+
+const DETAILED_SERVICES = [{
+  id: "hail",
+  title: "Hail Damage Repair",
+  icon: "Droplet",
+  img: "https://images.unsplash.com/photo-1547038577-da80abbc4f19?w=1200&q=85&auto=format&fit=crop",
+  headline: "Paintless dent repair, panel by panel.",
+  blurb: "Texas hailstorms hit hard. Our PDR technicians have repaired thousands of vehicles after every major storm event since 2014 — bringing them back to factory condition without touching your paint.",
+  bullets: ["Massage-out technique — no body filler, no paint", "Lifetime warranty on every dent", "Direct insurance coordination", "Free pickup and delivery anywhere in DFW", "Most claims close in under 14 days"],
+  price: "From $0 out of pocket with insurance",
+  accent: "#e11d48"
+}, {
+  id: "ding",
+  title: "Door Ding Repair",
+  icon: "CarFront",
+  img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=85&auto=format&fit=crop",
+  headline: "Parking-lot damage, gone in an afternoon.",
+  blurb: "Door dings, shopping cart hits, and minor creases handled quickly and affordably. Most single-panel repairs are completed same-day.",
+  bullets: ["Same-day turnaround on most repairs", "Single-panel pricing — no upsell", "Original factory paint preserved", "Mobile service available"],
+  price: "From $125 per panel",
+  accent: "#f97316"
+}, {
+  id: "pdr",
+  title: "Paintless Dent Repair",
+  icon: "Wrench",
+  img: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=85&auto=format&fit=crop",
+  headline: "Master-level metal shaping.",
+  blurb: "Our lead techs each carry 10+ years of certified PDR experience. We restore creases, dings, and dents using specialty rods and reflection boards — preserving every square inch of your factory finish.",
+  bullets: ["Certified by Vale Training Solutions", "Aluminum panel certified (F-150, Range Rover)", "Lifetime warranty", "Faster, cheaper, and panel-saving vs. body shop"],
+  price: "Pricing varies by dent count and panel",
+  accent: "#eab308"
+}, {
+  id: "ceramic",
+  title: "Ceramic Coating",
+  icon: "Sparkles",
+  img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=85&auto=format&fit=crop",
+  headline: "Years of protection in a single application.",
+  blurb: "Hydrophobic, scratch-resistant, UV-stable ceramic coating. Free with any qualifying hail repair claim — or available as a standalone service. Multi-year warranty included.",
+  bullets: ["9H hardness ceramic chemistry", "5-year, 7-year, and lifetime packages", "Hydrophobic finish — water beads and rolls off", "Included free with qualifying hail repairs"],
+  price: "Free with hail claim · $899+ standalone",
+  accent: "#3b82f6"
+}, {
+  id: "delivery",
+  title: "Pickup & Delivery",
+  icon: "Truck",
+  img: "https://images.unsplash.com/photo-1568605114849-c4f5b8bff0f3?w=1200&q=85&auto=format&fit=crop",
+  headline: "You don't drive to us. We drive to you.",
+  blurb: "Anywhere in the Dallas-Fort Worth metroplex. We come to your home or office, pick up your vehicle, and return it cleaner than we found it.",
+  bullets: ["Free within 30 miles of McKinney", "Loaner vehicles available for extended repairs", "Photo updates throughout the repair", "Returned washed and detailed at no charge"],
+  price: "Free for hail claim customers",
+  accent: "#22c55e"
+}];
+function ServicesPage({
+  setPage
+}) {
+  const iconMap = {
+    Droplet,
+    CarFront,
+    Wrench,
+    Sparkles,
+    Truck
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "page-enter"
+  }, /*#__PURE__*/React.createElement(PageHeader, {
+    eyebrow: "Our services",
+    title: "Five services, one promise.",
+    sub: "We do one thing — restore your vehicle to its factory state — and we do it relentlessly well. Every repair is panel-saving, insurance-approved, and warrantied for life."
+  }), /*#__PURE__*/React.createElement("section", {
+    style: {
+      padding: "40px 0 120px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 24
+    }
+  }, DETAILED_SERVICES.map((s, i) => {
+    const Ic = iconMap[s.icon];
+    const reverse = i % 2 === 1;
+    return /*#__PURE__*/React.createElement(FadeIn, {
+      key: s.id
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "svc-row card",
+      style: {
+        flexDirection: reverse ? "row-reverse" : "row"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-art",
+      style: {
+        "--svc-accent": s.accent
+      }
+    }, /*#__PURE__*/React.createElement("img", {
+      src: s.img,
+      alt: s.title,
+      className: "svc-row-photo",
+      loading: "lazy",
+      onError: e => {
+        e.currentTarget.style.display = "none";
+        const fb = e.currentTarget.nextElementSibling;
+        if (fb) fb.style.display = "block";
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-fallback",
+      style: {
+        display: "none"
+      }
+    }, /*#__PURE__*/React.createElement(ServiceArt, {
+      id: s.id,
+      accent: s.accent
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-shade"
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-body"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-iconwrap",
+      style: {
+        background: s.accent + "22",
+        color: s.accent
+      }
+    }, /*#__PURE__*/React.createElement(Ic, {
+      size: 22
+    })), /*#__PURE__*/React.createElement("h3", {
+      className: "svc-row-title"
+    }, s.headline), /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-eyebrow"
+    }, s.title), /*#__PURE__*/React.createElement("p", {
+      className: "svc-row-blurb"
+    }, s.blurb), /*#__PURE__*/React.createElement("ul", {
+      className: "svc-row-bullets"
+    }, s.bullets.map((b, j) => /*#__PURE__*/React.createElement("li", {
+      key: j
+    }, /*#__PURE__*/React.createElement(Check, {
+      size: 14,
+      stroke: s.accent,
+      strokeWidth: 2.2
+    }), " ", b))), /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-foot"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "svc-row-price"
+    }, s.price), /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-primary",
+      onClick: () => setPage("contact")
+    }, "Book this service ", /*#__PURE__*/React.createElement(ArrowRight, {
+      size: 15
+    }))))));
+  })))), /*#__PURE__*/React.createElement(FinalCTA, {
+    setPage: setPage
+  }), /*#__PURE__*/React.createElement("style", null, `
+        .svc-row {
+          display: flex;
+          gap: 0;
+          align-items: stretch;
+          overflow: hidden;
+          min-height: 380px;
+        }
+        .svc-row-art {
+          flex: 1.1;
+          min-height: 320px;
+          position: relative;
+          background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%);
+          overflow: hidden;
+        }
+        .svc-row-photo,
+        .svc-row-fallback {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+        }
+        .svc-row-photo {
+          object-fit: cover; object-position: center;
+          filter: saturate(0.9) contrast(1.05);
+          transition: transform .6s var(--ease);
+        }
+        .svc-row:hover .svc-row-photo { transform: scale(1.04); }
+        .svc-row-fallback svg { width: 100%; height: 100%; display: block; }
+        .svc-row-shade {
+          position: absolute; inset: 0;
+          background:
+            linear-gradient(180deg, rgba(10,12,17,0) 50%, rgba(10,12,17,.55) 100%),
+            radial-gradient(80% 100% at 50% 100%, var(--svc-accent) 0%, transparent 70%);
+          mix-blend-mode: overlay;
+          opacity: 0.35;
+          pointer-events: none;
+        }
+        .svc-row-body {
+          flex: 1;
+          padding: 48px;
+          display: flex; flex-direction: column;
+          justify-content: center;
+        }
+        .svc-row-iconwrap {
+          width: 48px; height: 48px; border-radius: 10px;
+          display: grid; place-items: center;
+          margin-bottom: 20px;
+        }
+        .svc-row-eyebrow {
+          font-family: var(--f-display);
+          font-size: 11px; font-weight: 700;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          color: var(--fg-2);
+          margin-bottom: 12px;
+        }
+        .svc-row-title {
+          font-family: var(--f-display); font-weight: 800;
+          font-size: clamp(24px, 2.4vw, 34px);
+          letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 14px;
+        }
+        .svc-row-blurb {
+          color: var(--fg-1); font-size: 15.5px; line-height: 1.6;
+          margin: 0 0 22px;
+        }
+        .svc-row-bullets {
+          list-style: none; padding: 0; margin: 0 0 28px;
+          display: flex; flex-direction: column; gap: 8px;
+        }
+        .svc-row-bullets li {
+          display: flex; align-items: center; gap: 10px;
+          color: var(--fg-1); font-size: 14.5px;
+        }
+        .svc-row-foot {
+          display: flex; justify-content: space-between; align-items: center;
+          gap: 16px; flex-wrap: wrap;
+          margin-top: auto;
+          padding-top: 16px;
+          border-top: 1px solid var(--border);
+        }
+        .svc-row-price {
+          font-family: var(--f-display); font-weight: 600; font-size: 14px;
+          color: var(--fg-2);
+        }
+        @media (max-width: 900px) {
+          .svc-row, .svc-row[style*="row-reverse"] {
+            flex-direction: column !important;
+          }
+          .svc-row-body { padding: 28px; }
+          .svc-row-art { min-height: 220px; }
+        }
+      `));
+}
+
+/* Decorative SVG per service */
+function ServiceArt({
+  id,
+  accent
+}) {
+  const A = accent;
+  switch (id) {
+    case "hail":
+      return /*#__PURE__*/React.createElement("svg", {
+        viewBox: "0 0 400 380",
+        preserveAspectRatio: "xMidYMid slice",
+        style: {
+          width: "100%",
+          height: "100%"
+        }
+      }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+        id: "hg1",
+        cx: "50%",
+        cy: "0%",
+        r: "80%"
+      }, /*#__PURE__*/React.createElement("stop", {
+        offset: "0%",
+        stopColor: A,
+        stopOpacity: "0.3"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "100%",
+        stopColor: A,
+        stopOpacity: "0"
+      }))), /*#__PURE__*/React.createElement("rect", {
+        width: "400",
+        height: "380",
+        fill: "url(#hg1)"
+      }), Array.from({
+        length: 60
+      }).map((_, i) => {
+        const x = i * 41 % 400;
+        const y = i * 67 % 380;
+        const r = 2 + i % 4;
+        return /*#__PURE__*/React.createElement("circle", {
+          key: i,
+          cx: x,
+          cy: y,
+          r: r,
+          fill: "rgba(255,255,255,0.12)"
+        });
+      }), /*#__PURE__*/React.createElement("g", {
+        transform: "translate(60, 200)"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M0 80 Q140 -10 280 80 L280 100 Q140 30 0 100 Z",
+        fill: "rgba(255,255,255,0.04)",
+        stroke: "rgba(255,255,255,0.15)",
+        strokeWidth: "1"
+      }), [40, 80, 120, 160, 200, 240].map((x, i) => /*#__PURE__*/React.createElement("ellipse", {
+        key: i,
+        cx: x,
+        cy: 50 + i * 2,
+        rx: 8 + i,
+        ry: 3,
+        fill: "rgba(0,0,0,0.4)"
+      }))));
+    case "ding":
+      return /*#__PURE__*/React.createElement("svg", {
+        viewBox: "0 0 400 380",
+        preserveAspectRatio: "xMidYMid slice",
+        style: {
+          width: "100%",
+          height: "100%"
+        }
+      }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
+        id: "dg1",
+        x1: "0",
+        y1: "0",
+        x2: "1",
+        y2: "1"
+      }, /*#__PURE__*/React.createElement("stop", {
+        offset: "0%",
+        stopColor: A,
+        stopOpacity: "0.25"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "100%",
+        stopColor: A,
+        stopOpacity: "0"
+      }))), /*#__PURE__*/React.createElement("rect", {
+        width: "400",
+        height: "380",
+        fill: "url(#dg1)"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "100",
+        y1: "40",
+        x2: "100",
+        y2: "340",
+        stroke: "rgba(255,255,255,.18)",
+        strokeWidth: "3"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "300",
+        y1: "40",
+        x2: "300",
+        y2: "340",
+        stroke: "rgba(255,255,255,.18)",
+        strokeWidth: "3"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "200",
+        y1: "40",
+        x2: "200",
+        y2: "340",
+        stroke: A,
+        strokeWidth: "3",
+        strokeDasharray: "8 6"
+      }), [60, 240].map((x, i) => /*#__PURE__*/React.createElement("g", {
+        key: i,
+        transform: `translate(${x}, 150)`
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: "0",
+        y: "0",
+        width: "100",
+        height: "80",
+        rx: "12",
+        fill: "rgba(255,255,255,.08)",
+        stroke: "rgba(255,255,255,.2)"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "10",
+        y: "15",
+        width: "80",
+        height: "25",
+        rx: "6",
+        fill: "rgba(255,255,255,.06)"
+      }))), /*#__PURE__*/React.createElement("circle", {
+        cx: "200",
+        cy: "200",
+        r: "20",
+        fill: A,
+        opacity: "0.7"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "200",
+        cy: "200",
+        r: "40",
+        fill: "none",
+        stroke: A,
+        strokeWidth: "1.5",
+        opacity: "0.4"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "200",
+        cy: "200",
+        r: "60",
+        fill: "none",
+        stroke: A,
+        strokeWidth: "1.5",
+        opacity: "0.2"
+      }));
+    case "pdr":
+      return /*#__PURE__*/React.createElement("svg", {
+        viewBox: "0 0 400 380",
+        preserveAspectRatio: "xMidYMid slice",
+        style: {
+          width: "100%",
+          height: "100%"
+        }
+      }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+        id: "pg1",
+        cx: "50%",
+        cy: "50%",
+        r: "70%"
+      }, /*#__PURE__*/React.createElement("stop", {
+        offset: "0%",
+        stopColor: A,
+        stopOpacity: "0.25"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "100%",
+        stopColor: A,
+        stopOpacity: "0"
+      }))), /*#__PURE__*/React.createElement("rect", {
+        width: "400",
+        height: "380",
+        fill: "url(#pg1)"
+      }), Array.from({
+        length: 10
+      }).map((_, i) => /*#__PURE__*/React.createElement("line", {
+        key: i,
+        x1: "0",
+        y1: 40 + i * 32,
+        x2: "400",
+        y2: 40 + i * 32,
+        stroke: A,
+        strokeWidth: "1",
+        opacity: "0.18"
+      })), /*#__PURE__*/React.createElement("g", {
+        transform: "translate(160, 110)"
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: "0",
+        y: "0",
+        width: "14",
+        height: "200",
+        rx: "6",
+        fill: "rgba(255,255,255,.7)"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "7",
+        cy: "0",
+        r: "14",
+        fill: A,
+        stroke: "rgba(255,255,255,.4)",
+        strokeWidth: "2"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "-6",
+        y: "200",
+        width: "26",
+        height: "14",
+        rx: "4",
+        fill: "rgba(120,120,120,.7)"
+      })), /*#__PURE__*/React.createElement("path", {
+        d: "M40 280 Q200 240 360 280",
+        fill: "none",
+        stroke: "rgba(255,255,255,.4)",
+        strokeWidth: "2"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M40 280 Q200 320 360 280",
+        fill: "rgba(255,255,255,.05)",
+        stroke: A,
+        strokeWidth: "1.5",
+        strokeDasharray: "4 4"
+      }));
+    case "ceramic":
+      return /*#__PURE__*/React.createElement("svg", {
+        viewBox: "0 0 400 380",
+        preserveAspectRatio: "xMidYMid slice",
+        style: {
+          width: "100%",
+          height: "100%"
+        }
+      }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
+        id: "cg1",
+        x1: "0",
+        y1: "0",
+        x2: "1",
+        y2: "1"
+      }, /*#__PURE__*/React.createElement("stop", {
+        offset: "0%",
+        stopColor: "rgba(255,255,255,0.15)"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "50%",
+        stopColor: A,
+        stopOpacity: "0.4"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "100%",
+        stopColor: "rgba(255,255,255,0)"
+      }))), /*#__PURE__*/React.createElement("rect", {
+        width: "400",
+        height: "380",
+        fill: "rgba(15,18,25,1)"
+      }), /*#__PURE__*/React.createElement("rect", {
+        width: "400",
+        height: "380",
+        fill: "url(#cg1)"
+      }), Array.from({
+        length: 18
+      }).map((_, i) => {
+        const x = i * 79 % 400;
+        const y = i * 53 % 380;
+        const r = 8 + i % 5 * 3;
+        return /*#__PURE__*/React.createElement("g", {
+          key: i
+        }, /*#__PURE__*/React.createElement("circle", {
+          cx: x,
+          cy: y,
+          r: r,
+          fill: "rgba(255,255,255,0.06)",
+          stroke: "rgba(255,255,255,0.25)",
+          strokeWidth: "1"
+        }), /*#__PURE__*/React.createElement("circle", {
+          cx: x - r / 3,
+          cy: y - r / 3,
+          r: r / 4,
+          fill: "rgba(255,255,255,0.35)"
+        }));
+      }), /*#__PURE__*/React.createElement("g", {
+        transform: "translate(200, 190)",
+        stroke: A,
+        strokeWidth: "2",
+        fill: "none"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M0 -30 L0 30 M-30 0 L30 0"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M-21 -21 L21 21 M-21 21 L21 -21",
+        opacity: "0.6"
+      })));
+    case "delivery":
+      return /*#__PURE__*/React.createElement("svg", {
+        viewBox: "0 0 400 380",
+        preserveAspectRatio: "xMidYMid slice",
+        style: {
+          width: "100%",
+          height: "100%"
+        }
+      }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
+        id: "tg1",
+        x1: "0",
+        y1: "0",
+        x2: "0",
+        y2: "1"
+      }, /*#__PURE__*/React.createElement("stop", {
+        offset: "0%",
+        stopColor: A,
+        stopOpacity: "0.2"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "100%",
+        stopColor: A,
+        stopOpacity: "0"
+      }))), /*#__PURE__*/React.createElement("rect", {
+        width: "400",
+        height: "380",
+        fill: "url(#tg1)"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "0",
+        y: "280",
+        width: "400",
+        height: "100",
+        fill: "rgba(255,255,255,.05)"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "0",
+        y1: "330",
+        x2: "400",
+        y2: "330",
+        stroke: A,
+        strokeDasharray: "30 20",
+        strokeWidth: "3"
+      }), /*#__PURE__*/React.createElement("g", {
+        transform: "translate(80, 180)"
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: "0",
+        y: "0",
+        width: "150",
+        height: "90",
+        rx: "6",
+        fill: "rgba(255,255,255,.1)",
+        stroke: "rgba(255,255,255,.25)"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "150",
+        y: "30",
+        width: "60",
+        height: "60",
+        rx: "6",
+        fill: "rgba(255,255,255,.15)",
+        stroke: "rgba(255,255,255,.3)"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "158",
+        y: "40",
+        width: "44",
+        height: "22",
+        rx: "3",
+        fill: "rgba(255,255,255,.4)"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "40",
+        cy: "100",
+        r: "16",
+        fill: "#0a0c11",
+        stroke: A,
+        strokeWidth: "3"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "170",
+        cy: "100",
+        r: "16",
+        fill: "#0a0c11",
+        stroke: A,
+        strokeWidth: "3"
+      })), [120, 140, 160].map((y, i) => /*#__PURE__*/React.createElement("line", {
+        key: i,
+        x1: "0",
+        y1: y,
+        x2: 60 - i * 10,
+        y2: y,
+        stroke: A,
+        strokeWidth: "2",
+        opacity: 0.5 - i * 0.1
+      })));
+    default:
+      return null;
+  }
+}
+function PageHeader({
+  eyebrow,
+  title,
+  sub
+}) {
+  return /*#__PURE__*/React.createElement("section", {
+    style: {
+      paddingTop: "calc(var(--nav-h) + 80px)",
+      paddingBottom: 64,
+      borderBottom: "1px solid var(--border)",
+      background: "linear-gradient(180deg, var(--bg-1) 0%, var(--bg) 100%)",
+      position: "relative",
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "grid-bg",
+    style: {
+      opacity: 0.6
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      inset: 0,
+      background: "radial-gradient(50% 80% at 50% 0%, rgba(207,54,45,.18), transparent 65%)",
+      pointerEvents: "none"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "container",
+    style: {
+      position: "relative",
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("span", {
+    className: "chip"
+  }, eyebrow)), /*#__PURE__*/React.createElement(FadeIn, {
+    delay: 60
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "display",
+    style: {
+      fontSize: "clamp(40px, 5.6vw, 76px)",
+      margin: "20px 0 16px",
+      maxWidth: 880
+    }
+  }, title)), sub && /*#__PURE__*/React.createElement(FadeIn, {
+    delay: 120
+  }, /*#__PURE__*/React.createElement("p", {
+    style: {
+      color: "var(--fg-1)",
+      fontSize: 18,
+      maxWidth: 640,
+      lineHeight: 1.55,
+      margin: 0
+    }
+  }, sub))));
+}
+Object.assign(window, {
+  ServicesPage,
+  ServiceArt,
+  PageHeader,
+  DETAILED_SERVICES
+});
