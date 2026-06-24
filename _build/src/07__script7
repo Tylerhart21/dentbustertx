@@ -1,0 +1,249 @@
+/* global React, FadeIn, PROCESS_STEPS, PageHeader */
+
+const PROCESS_DETAILED = [
+  {
+    n: 1, title: "Contact us",
+    timing: "Same day response",
+    icon: "Phone",
+    blurb: "Call, text, or upload photos through our site. Whatever's easiest. We respond within hours during business days, often within minutes.",
+    details: [
+      "Same-day response Mon–Sat",
+      "Text photos to (214) 859-7534 — quickest path",
+      "Schedule online in under 2 minutes",
+      "No pressure, no fine print",
+    ],
+    quote: "We don't sell — we assess. If your damage doesn't warrant a claim, we'll tell you.",
+  },
+  {
+    n: 2, title: "Inspection & approval",
+    timing: "30 – 45 min visit",
+    icon: "FileCheck",
+    blurb: "We'll meet you at home, your office, or our McKinney shop. Walk every panel, document every dent, then handle every conversation with your insurance carrier from there.",
+    details: [
+      "Free, no-obligation inspection",
+      "We file your claim and handle the adjuster meeting",
+      "Deductible assistance for qualifying claims",
+      "Repair scope locked before any work begins",
+    ],
+    quote: "You're never on the phone with your insurance company unless you want to be.",
+  },
+  {
+    n: 3, title: "Repair process",
+    timing: "5 – 10 business days",
+    icon: "Wrench",
+    blurb: "Your vehicle goes to our climate-controlled shop. Master PDR techs work panel by panel. No paint booth, no fillers, no replacement parts — just precision metal shaping.",
+    details: [
+      "Vale-certified PDR specialists",
+      "Photo updates at every milestone",
+      "Aluminum-panel certified (F-150, etc.)",
+      "Free ceramic coating on qualifying claims",
+    ],
+    quote: "Your factory paint is what makes your car worth what it's worth. We don't touch it.",
+  },
+  {
+    n: 4, title: "Delivery",
+    timing: "We come to you",
+    icon: "CarFront",
+    blurb: "We deliver the vehicle to your door — washed, detailed, and inspected. Walk it with us. If you spot anything, we fix it on the spot. Then your lifetime warranty kicks in.",
+    details: [
+      "Full wash and interior detail included",
+      "Side-by-side walkthrough at delivery",
+      "Lifetime warranty in writing",
+      "24-hour satisfaction guarantee",
+    ],
+    quote: "If it doesn't look factory-new, we keep working. That's the deal.",
+  },
+];
+
+function ProcessPage({ setPage }) {
+  const iconMap = { Phone, FileCheck, Wrench, CarFront };
+
+  return (
+    <div className="page-enter">
+      <PageHeader
+        eyebrow="The process"
+        title="Built so you don't lift a finger."
+        sub="From the first text to keys back in your hand, here's what to expect. Most claims close in under 14 days, with zero out-of-pocket cost to you."
+      />
+
+      <section className="section">
+        <div className="container">
+          <div className="proc-rail">
+            {PROCESS_DETAILED.map((p, i) => {
+              const Ic = iconMap[p.icon];
+              return (
+                <FadeIn key={p.n} delay={i * 100}>
+                  <div className="proc-step">
+                    <div className="proc-step-side">
+                      <div className="proc-step-bigno mono">
+                        {String(p.n).padStart(2, "0")}
+                      </div>
+                      {i < PROCESS_DETAILED.length - 1 && (
+                        <div className="proc-step-vline"/>
+                      )}
+                    </div>
+
+                    <div className="proc-step-content card">
+                      <div className="proc-step-header">
+                        <div className="proc-step-icon"><Ic size={20}/></div>
+                        <div>
+                          <h3 className="proc-step-title">{p.title}</h3>
+                          <div className="proc-step-timing">
+                            <Clock size={12}/> {p.timing}
+                          </div>
+                        </div>
+                      </div>
+                      <p className="proc-step-blurb">{p.blurb}</p>
+                      <div className="proc-step-bullets">
+                        {p.details.map((d, j) => (
+                          <div key={j} className="proc-step-bullet">
+                            <Check size={14} stroke="var(--accent-hi)" strokeWidth={2.2}/>
+                            <span>{d}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="proc-step-quote">
+                        &ldquo;{p.quote}&rdquo;
+                      </div>
+                    </div>
+                  </div>
+                </FadeIn>
+              );
+            })}
+          </div>
+        </div>
+
+        <style>{`
+          .proc-rail {
+            display: flex; flex-direction: column; gap: 32px;
+            max-width: 920px; margin: 0 auto;
+          }
+          .proc-step {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 28px;
+            align-items: flex-start;
+          }
+          .proc-step-side {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 16px;
+            position: sticky; top: 100px;
+          }
+          .proc-step-bigno {
+            font-family: var(--f-display);
+            font-weight: 800;
+            font-size: 64px;
+            letter-spacing: -0.04em;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--accent);
+            line-height: 1;
+          }
+          .proc-step-vline {
+            width: 1px; flex: 1; min-height: 200px;
+            background: linear-gradient(180deg, var(--accent-dim), transparent);
+          }
+          .proc-step-content { padding: 32px; }
+          .proc-step-header {
+            display: flex; gap: 14px; align-items: center;
+            margin-bottom: 14px;
+          }
+          .proc-step-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent-hi);
+            display: grid; place-items: center;
+            border: 1px solid rgba(207,54,45,.25);
+          }
+          .proc-step-title {
+            font-family: var(--f-display); font-weight: 800;
+            font-size: 26px; letter-spacing: -0.01em; margin: 0;
+          }
+          .proc-step-timing {
+            display: inline-flex; gap: 6px; align-items: center;
+            color: var(--fg-2); font-family: var(--f-display);
+            font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+            text-transform: uppercase; margin-top: 4px;
+          }
+          .proc-step-blurb {
+            color: var(--fg-1); font-size: 15.5px;
+            line-height: 1.6; margin: 0 0 20px;
+          }
+          .proc-step-bullets {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 10px 24px;
+            padding: 18px 0; margin: 0 0 18px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+          }
+          .proc-step-bullet {
+            display: flex; gap: 10px; align-items: center;
+            color: var(--fg-1); font-size: 14px;
+          }
+          .proc-step-quote {
+            font-family: var(--f-display); font-style: italic;
+            font-size: 16px; color: var(--fg-1);
+            border-left: 3px solid var(--accent);
+            padding: 4px 0 4px 14px;
+            line-height: 1.5;
+          }
+          @media (max-width: 700px) {
+            .proc-step { grid-template-columns: 1fr; gap: 16px; }
+            .proc-step-side { position: static; flex-direction: row; }
+            .proc-step-vline { display: none; }
+            .proc-step-bigno { font-size: 44px; }
+            .proc-step-content { padding: 24px; }
+            .proc-step-bullets { grid-template-columns: 1fr; }
+          }
+        `}</style>
+      </section>
+
+      {/* What you don't have to do */}
+      <section className="section" style={{ background: "var(--bg-1)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+        <div className="container">
+          <div className="section-head" style={{ textAlign: "center", margin: "0 auto 56px", alignItems: "center" }}>
+            <FadeIn><span className="chip">What you skip</span></FadeIn>
+            <FadeIn delay={80}><h2>The work we&rsquo;ll save you.</h2></FadeIn>
+          </div>
+
+          <div className="skip-grid">
+            {[
+              ["Filing claims", "We file your claim, attach our documentation, and handle the adjuster meeting."],
+              ["Paying upfront", "Direct billing with every major carrier. $0 out of pocket on qualifying claims."],
+              ["Driving the car in", "Free pickup at your home or office, anywhere in DFW."],
+              ["Detail prep", "We hand-wash and detail every vehicle before delivery — at no charge."],
+              ["Multiple shop visits", "One-stop: inspection, repair, ceramic, and delivery. No round trips."],
+              ["Reading the fine print", "Lifetime warranty in plain English. We back our work, in writing."],
+            ].map((item, i) => (
+              <FadeIn key={i} delay={i * 60}>
+                <div className="skip-item card">
+                  <div className="skip-item-strike">{item[0]}</div>
+                  <div className="skip-item-blurb">{item[1]}</div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          .skip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+          .skip-item { padding: 24px; }
+          .skip-item-strike {
+            font-family: var(--f-display); font-weight: 700; font-size: 18px;
+            text-decoration: line-through;
+            text-decoration-color: var(--accent);
+            text-decoration-thickness: 2px;
+            color: var(--fg-2);
+            margin-bottom: 8px;
+          }
+          .skip-item-blurb { color: var(--fg-1); font-size: 14px; line-height: 1.55; }
+          @media (max-width: 900px) { .skip-grid { grid-template-columns: 1fr 1fr; } }
+          @media (max-width: 560px) { .skip-grid { grid-template-columns: 1fr; } }
+        `}</style>
+      </section>
+
+      <FinalCTA setPage={setPage} />
+    </div>
+  );
+}
+
+Object.assign(window, { ProcessPage, PROCESS_DETAILED });

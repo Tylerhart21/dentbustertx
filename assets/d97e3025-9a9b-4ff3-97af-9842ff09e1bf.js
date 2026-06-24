@@ -230,6 +230,8 @@ function HomePage({
     setPage: setPage
   }), /*#__PURE__*/React.createElement(StatsBand, null), /*#__PURE__*/React.createElement(ProcessPreview, {
     setPage: setPage
+  }), /*#__PURE__*/React.createElement(WhyPDR, {
+    setPage: setPage
   }), /*#__PURE__*/React.createElement("section", {
     className: "section",
     style: {

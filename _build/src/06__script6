@@ -1,0 +1,932 @@
+/* global React, FadeIn, PageHeader, FinalCTA */
+
+/* =========================================================
+   DETAILING PAGE — tiered pricing + add-ons
+   ========================================================= */
+
+const DETAIL_GROUPS = [
+  {
+    id: "interior",
+    label: "Interior Packages",
+    icon: "Sparkles",
+    blurb: "Vacuumed, dusted, and detailed from the dash to the carpets.",
+    tiers: [
+      {
+        name: "Silver", sedan: 100, suv: 120,
+        features: [
+          "Thorough vacuum (carpets, seats, doors, etc.)",
+          "Dust interior (doors, seats, dash, etc.)",
+        ],
+      },
+      {
+        name: "Gold", sedan: 185, suv: 200, featured: true, badge: "Most popular",
+        features: [
+          "Thorough vacuum (carpets, seats, doors, etc.)",
+          "Dust interior (doors, seats, dash, etc.)",
+          "Scrub down (doors and cupholders)",
+          "Glass cleaned",
+          "Trims conditioned (dash and doors)",
+          "Floor mats wiped down",
+        ],
+      },
+      {
+        name: "Platinum", sedan: 275, suv: 300, badge: "Most complete",
+        features: [
+          "Thorough vacuum (carpets, seats, doors, etc.)",
+          "Dust interior (doors, seats, dash, etc.)",
+          "Scrub down and steam (doors, seats, cupholders, vents)",
+          "Glass cleaned",
+          "Trims conditioned (dash and doors)",
+          "Floor mats wiped down and steamed",
+          "Shampoo and steam (carpet and cloth seats)",
+        ],
+      },
+    ],
+  },
+  {
+    id: "exterior",
+    label: "Exterior Packages",
+    icon: "CarFront",
+    blurb: "Hand-washed, decontaminated, and protected — wheels to glass.",
+    tiers: [
+      {
+        name: "Silver", sedan: 65, suv: 80,
+        features: [
+          "Hand wash",
+          "Spray wax",
+          "Wheels and tires cleaned and shined",
+          "Glass cleaned",
+        ],
+      },
+      {
+        name: "Gold", sedan: 100, suv: 120, featured: true, badge: "Most popular",
+        features: [
+          "Hand wash",
+          "Clay bar (removes contaminants from paint)",
+          "Spray wax",
+          "Wheels and tires cleaned and shined",
+          "Glass cleaned",
+        ],
+      },
+      {
+        name: "Platinum", sedan: 140, suv: 160, badge: "1-yr ceramic",
+        features: [
+          "Hand wash",
+          "Clay bar",
+          "1-year ceramic sealant (paint and wheels)",
+          "Wheels and tires cleaned and shined",
+          "Glass cleaned",
+        ],
+      },
+    ],
+  },
+];
+
+const DETAIL_ADDONS = [
+  { name: "Pet Hair Removal", price: "+$50", icon: "ThumbsUp" },
+  { name: "Headliner Cleaning", price: "Add-on", icon: "Sparkles" },
+  { name: "Engine Bay Cleaning", price: "Add-on", icon: "Wrench" },
+];
+
+function DetailingPage({ setPage }) {
+  const iconMap = { Droplet, Sparkles, CarFront, Trophy, Wrench, ThumbsUp, Shield };
+
+  return (
+    <div className="page-enter">
+      <PageHeader
+        eyebrow="Auto detailing"
+        title="We made your paint flawless. Now keep it that way."
+        sub="Detailing is the natural companion to hail repair — once your panels are perfect, regular detailing protects the finish, the resale value, and the way it feels to drive. Pick a package, or build your own with add-ons."
+      />
+
+      <section className="section">
+        <div className="container">
+          {DETAIL_GROUPS.map((group) => {
+            const GroupIc = iconMap[group.icon];
+            return (
+              <div key={group.id} className="detail-group">
+                <FadeIn>
+                  <div className="detail-group-head">
+                    <div className="detail-group-icon"><GroupIc size={18}/></div>
+                    <div>
+                      <h3 className="detail-group-title">{group.label}</h3>
+                      <p className="detail-group-blurb">{group.blurb}</p>
+                    </div>
+                  </div>
+                </FadeIn>
+                <div className="detail-grid detail-grid-3">
+                  {group.tiers.map((tier, i) => (
+                    <FadeIn key={tier.name} delay={i * 70}>
+                      <div className={"detail-card card" + (tier.featured ? " featured" : "")}>
+                        {tier.badge && <div className="detail-badge">{tier.badge}</div>}
+                        <h4 className="detail-name">{tier.name}</h4>
+                        <div className="detail-price">
+                          <div className="detail-price-row">
+                            <span className="detail-price-veh">Sedan</span>
+                            <span className="detail-price-num">${tier.sedan}</span>
+                          </div>
+                          <div className="detail-price-row">
+                            <span className="detail-price-veh">Truck &amp; SUV</span>
+                            <span className="detail-price-num">${tier.suv}</span>
+                          </div>
+                        </div>
+                        <ul className="detail-features">
+                          {tier.features.map((f, j) => (
+                            <li key={j}>
+                              <Check size={15} stroke={tier.featured ? "var(--accent-hi)" : "#4ade80"} strokeWidth={2.4}/>
+                              <span>{f}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <button
+                          className={"btn " + (tier.featured ? "btn-primary" : "btn-ghost")}
+                          style={{ width: "100%", marginTop: "auto" }}
+                          onClick={() => setPage("contact")}>
+                          Book {group.id === "interior" ? "Interior" : "Exterior"} {tier.name} <ArrowRight size={14}/>
+                        </button>
+                      </div>
+                    </FadeIn>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Add-ons + fine print */}
+          <FadeIn>
+            <div className="addons">
+              <div className="addons-head">
+                <span className="chip">Add-ons &amp; fine print</span>
+                <h3 className="addons-title">A few things to know.</h3>
+                <p className="addons-sub">Every detail includes one set of floor mats cleaned. These extras are billed separately.</p>
+              </div>
+              <div className="addons-grid addons-grid-3">
+                {DETAIL_ADDONS.map((a, i) => {
+                  const Ic = iconMap[a.icon];
+                  return (
+                    <div key={i} className="addon-card card">
+                      <div className="addon-icon"><Ic size={18}/></div>
+                      <div className="addon-name">{a.name}</div>
+                      <div className="addon-price">{a.price}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn>
+            <p className="detail-footnote">
+              All details include only one set of floor mats cleaned. $50 pet hair removal fee if needed.
+              Headliner cleaning is a separate charge. Engine bay cleaning is a separate charge.
+              Pricing reflects standard condition; heavily soiled vehicles may be quoted on inspection.
+            </p>
+          </FadeIn>
+        </div>
+
+        <style>{`
+          .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 80px;
+            padding-top: 14px;
+          }
+          .detail-card {
+            padding: 28px;
+            display: flex; flex-direction: column;
+            position: relative;
+          }
+          .detail-card.featured {
+            background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent-soft), var(--shadow-lg);
+            overflow: visible;
+            padding-top: 34px;
+          }
+          .detail-badge {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--f-display);
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+            box-shadow: var(--shadow-accent);
+          }
+          .detail-card-head {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 18px;
+          }
+          .detail-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent-hi);
+            border: 1px solid rgba(207,54,45,.25);
+            display: grid; place-items: center;
+            flex: 0 0 auto;
+          }
+          .detail-tagline {
+            font-family: var(--f-display); font-size: 13px;
+            color: var(--fg-2); font-style: italic;
+            line-height: 1.3;
+          }
+          .detail-name {
+            font-family: var(--f-display); font-weight: 800;
+            font-size: 20px; letter-spacing: -0.01em;
+            margin: 0 0 14px; line-height: 1.15;
+          }
+          .detail-price {
+            display: flex; flex-direction: column;
+            padding-bottom: 20px; margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+          }
+          .detail-price-from {
+            font-family: var(--f-display); font-size: 11px;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--fg-2);
+          }
+          .detail-price-num {
+            font-family: var(--f-display); font-weight: 800;
+            font-size: 42px; letter-spacing: -0.03em;
+            color: var(--fg); line-height: 1;
+            margin-top: 4px;
+          }
+          .detail-features {
+            list-style: none; padding: 0; margin: 0 0 24px;
+            display: flex; flex-direction: column; gap: 11px;
+          }
+          .detail-features li {
+            display: flex; gap: 10px; align-items: flex-start;
+            color: var(--fg-1); font-size: 13.5px; line-height: 1.4;
+          }
+          .detail-features li svg { flex: 0 0 auto; margin-top: 2px; }
+
+          .addons {
+            padding: 40px;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+          }
+          .addons-head { margin-bottom: 28px; }
+          .addons-title {
+            font-family: var(--f-display); font-weight: 800;
+            font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.02em;
+            margin: 14px 0 8px;
+          }
+          .addons-sub { color: var(--fg-2); font-size: 15px; margin: 0; }
+          .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+          }
+          .addon-card {
+            padding: 20px;
+            display: flex; flex-direction: column; gap: 10px;
+          }
+          .addon-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+          .addon-icon {
+            width: 36px; height: 36px; border-radius: 8px;
+            background: var(--bg-3); color: var(--accent-hi);
+            display: grid; place-items: center;
+          }
+          .addon-name {
+            font-family: var(--f-display); font-weight: 600; font-size: 14px;
+            line-height: 1.3; flex: 1;
+          }
+          .addon-price {
+            font-family: var(--f-mono); font-weight: 700; font-size: 16px;
+            color: var(--accent-hi);
+          }
+          .detail-footnote {
+            margin: 32px auto 0;
+            max-width: 720px;
+            text-align: center;
+            color: var(--fg-2);
+            font-size: 13.5px;
+            line-height: 1.6;
+            font-style: italic;
+          }
+          @media (max-width: 1000px) {
+            .detail-grid { grid-template-columns: 1fr 1fr; }
+            .addons-grid { grid-template-columns: repeat(3, 1fr); }
+          }
+          @media (max-width: 560px) {
+            .detail-grid { grid-template-columns: 1fr; }
+            .addons-grid { grid-template-columns: 1fr 1fr; }
+            .addons { padding: 24px; }
+          }
+
+          /* Grouped detailing menu (Interior / Exterior, dual pricing) */
+          .detail-group { margin-bottom: 60px; }
+          .detail-group:last-of-type { margin-bottom: 28px; }
+          .detail-group-head {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 22px; padding-top: 6px;
+          }
+          .detail-group-icon {
+            width: 44px; height: 44px; border-radius: 11px;
+            background: var(--accent-soft); color: var(--accent-hi);
+            border: 1px solid rgba(207,54,45,.25);
+            display: grid; place-items: center; flex: 0 0 auto;
+          }
+          .detail-group-title {
+            font-family: var(--f-display); font-weight: 800;
+            font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.02em; margin: 0;
+          }
+          .detail-group-blurb { color: var(--fg-2); font-size: 14px; margin: 4px 0 0; }
+          .detail-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+            margin-bottom: 0; padding-top: 0;
+          }
+          .detail-card { padding-top: 34px; overflow: visible; }
+          .detail-price { gap: 4px; }
+          .detail-price-row {
+            display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+          }
+          .detail-price-veh {
+            font-family: var(--f-display); font-size: 12px; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-2);
+          }
+          .detail-price-row .detail-price-num { font-size: 27px; }
+          .addons-grid-3 { grid-template-columns: repeat(3, 1fr); }
+          @media (max-width: 1000px) {
+            .detail-grid-3 { grid-template-columns: 1fr 1fr; }
+            .addons-grid-3 { grid-template-columns: 1fr; }
+          }
+          @media (max-width: 560px) {
+            .detail-grid-3 { grid-template-columns: 1fr; }
+          }
+        `}</style>
+      </section>
+
+      <FinalCTA setPage={setPage} />
+    </div>
+  );
+}
+
+/* =========================================================
+   PAINT PROTECTION PAGE — PPF + Ceramic education
+   ========================================================= */
+
+function PaintProtectionPage({ setPage }) {
+  return (
+    <div className="page-enter">
+      <PageHeader
+        eyebrow="Paint protection"
+        title="Two kinds of armor for your paint."
+        sub="Paint Protection Film and ceramic coating solve different problems — and they work best together. Here's the plain-English version, so you know exactly what you're paying for."
+      />
+
+      <section className="section">
+        <div className="container">
+          {/* PPF block */}
+          <FadeIn>
+            <div className="pp-block card">
+              <div className="pp-art pp-art-ppf">
+                <PPFArt />
+                <div className="pp-art-tag"><Shield size={14}/> Physical armor</div>
+              </div>
+              <div className="pp-body">
+                <div className="pp-eyebrow">Paint Protection Film (PPF)</div>
+                <h3 className="pp-title">A clear shield over your paint.</h3>
+                <p className="pp-lead">
+                  A thick, clear urethane film applied over your paint — sometimes called a
+                  &ldquo;clear bra.&rdquo; It&rsquo;s physical armor: it absorbs rock chips,
+                  road debris, sand, bug splatter, light scratches, and door dings before they
+                  ever reach your paint.
+                </p>
+                <div className="pp-points">
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Self-healing.</strong> Minor scratches and swirls disappear with heat from the sun.</span></div>
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Blocks UV yellowing</strong> and lasts 5–10 years.</span></div>
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Nearly invisible</strong>, or available in a matte &ldquo;stealth&rdquo; finish.</span></div>
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Best on the front end</strong> — bumper, hood, fenders, mirrors — where 90% of chips happen. Or full-body for total coverage.</span></div>
+                </div>
+                <div className="pp-bottomline">
+                  <span className="pp-bl-label">Bottom line</span>
+                  PPF stops physical damage and saves you from repaint bills that run $500–$3,000 per panel.
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Ceramic block */}
+          <FadeIn>
+            <div className="pp-block card pp-block-rev">
+              <div className="pp-art pp-art-ceramic">
+                <CeramicArt />
+                <div className="pp-art-tag"><Droplet size={14}/> Chemical + UV armor</div>
+              </div>
+              <div className="pp-body">
+                <div className="pp-eyebrow">Ceramic Coating</div>
+                <h3 className="pp-title">A glass-like layer that bonds to your clear coat.</h3>
+                <p className="pp-lead">
+                  A liquid coating (silicon dioxide) that chemically bonds to your clear coat and
+                  cures into a hard, glass-like layer. It&rsquo;s chemical and UV armor — plus
+                  serious shine.
+                </p>
+                <div className="pp-points">
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Hydrophobic.</strong> Water beads up and rolls off, taking dirt with it — so washing is faster and the car stays cleaner.</span></div>
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Deep, glossy &ldquo;wet&rdquo; look</strong> that resists swirl marks.</span></div>
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Resists bird droppings, acid rain, and road salt.</strong> Replaces waxing entirely.</span></div>
+                  <div className="pp-point"><Check size={15} stroke="var(--accent-hi)" strokeWidth={2.4}/><span><strong>Lasts 2–9 years</strong> depending on grade — versus wax that lasts weeks.</span></div>
+                </div>
+                <div className="pp-bottomline">
+                  <span className="pp-bl-label">Bottom line</span>
+                  Ceramic protects against chemicals and UV, makes cleaning effortless, and keeps the gloss.
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Which do I need? */}
+      <section className="section" style={{ background: "var(--bg-1)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+        <div className="container">
+          <div className="section-head" style={{ alignItems: "center", textAlign: "center", margin: "0 auto 48px" }}>
+            <FadeIn><span className="chip">Which do I need?</span></FadeIn>
+            <FadeIn delay={80}><h2>They solve different problems.</h2></FadeIn>
+            <FadeIn delay={160}>
+              <p style={{ margin: "0 auto" }}>
+                Ceramic coating <strong style={{ color: "var(--fg)" }}>will not</strong> stop rock chips, deep key scratches, or shopping-cart
+                impacts — that requires PPF. Think of ceramic as chemical and UV armor, and PPF as physical impact armor.
+              </p>
+            </FadeIn>
+          </div>
+
+          <FadeIn>
+            <div className="compare">
+              <div className="compare-col">
+                <div className="compare-head">
+                  <div className="compare-icon" style={{ background: "rgba(207,54,45,.14)", color: "var(--accent-hi)" }}><Shield size={22}/></div>
+                  <div>
+                    <div className="compare-name">Paint Protection Film</div>
+                    <div className="compare-tag">Physical impact protection</div>
+                  </div>
+                </div>
+                <ul className="compare-list">
+                  <li><Check size={14} stroke="#4ade80" strokeWidth={2.4}/> Rock chips &amp; road debris</li>
+                  <li><Check size={14} stroke="#4ade80" strokeWidth={2.4}/> Light scratches &amp; door dings</li>
+                  <li><Check size={14} stroke="#4ade80" strokeWidth={2.4}/> Self-healing with heat</li>
+                  <li><X size={14} stroke="var(--fg-3)" strokeWidth={2.4}/> Not primarily about gloss</li>
+                </ul>
+              </div>
+
+              <div className="compare-plus">+</div>
+
+              <div className="compare-col">
+                <div className="compare-head">
+                  <div className="compare-icon" style={{ background: "rgba(59,130,246,.14)", color: "#60a5fa" }}><Droplet size={22}/></div>
+                  <div>
+                    <div className="compare-name">Ceramic Coating</div>
+                    <div className="compare-tag">Chemical / UV protection + gloss</div>
+                  </div>
+                </div>
+                <ul className="compare-list">
+                  <li><Check size={14} stroke="#4ade80" strokeWidth={2.4}/> Chemical &amp; UV resistance</li>
+                  <li><Check size={14} stroke="#4ade80" strokeWidth={2.4}/> Hydrophobic, easy cleaning</li>
+                  <li><Check size={14} stroke="#4ade80" strokeWidth={2.4}/> Deep, lasting gloss</li>
+                  <li><X size={14} stroke="var(--fg-3)" strokeWidth={2.4}/> Won&rsquo;t stop rock chips</li>
+                </ul>
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn>
+            <div className="sweet-spot">
+              <Sparkles size={18} stroke="var(--accent-hi)"/>
+              <span>
+                <strong>The common sweet spot:</strong> PPF on the high-impact front end, ceramic on the rest —
+                ceramic is often applied right over PPF for the best of both.
+              </span>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Pricing teaser */}
+      <section className="section">
+        <div className="container">
+          <div className="pp-pricing">
+            <FadeIn>
+              <div className="pp-price-card card">
+                <div className="pp-price-icon" style={{ background: "rgba(59,130,246,.14)", color: "#60a5fa" }}><Droplet size={22}/></div>
+                <div className="pp-price-name">Ceramic Coating</div>
+                <div className="pp-price-amt"><span>starting at</span> $799</div>
+                <div className="pp-price-note">Multi-year protection, by grade and vehicle</div>
+                <button className="btn btn-ghost" style={{ width: "100%", marginTop: 18 }} onClick={() => setPage("contact")}>
+                  Request a quote <ArrowRight size={14}/>
+                </button>
+              </div>
+            </FadeIn>
+            <FadeIn delay={100}>
+              <div className="pp-price-card card featured">
+                <div className="pp-price-icon" style={{ background: "rgba(207,54,45,.14)", color: "var(--accent-hi)" }}><Shield size={22}/></div>
+                <div className="pp-price-name">Paint Protection Film</div>
+                <div className="pp-price-amt"><span>starting at</span> $799</div>
+                <div className="pp-price-note">Partial front coverage — bumper, hood edge, mirrors</div>
+                <button className="btn btn-primary" style={{ width: "100%", marginTop: 18 }} onClick={() => setPage("contact")}>
+                  Request a quote <ArrowRight size={14}/>
+                </button>
+              </div>
+            </FadeIn>
+          </div>
+          <p className="detail-footnote">
+            Pricing varies by vehicle, coverage area, and condition. Full-front and full-body
+            packages quoted on inspection. Contact us for an exact quote.
+          </p>
+        </div>
+      </section>
+
+      <FinalCTA setPage={setPage} />
+
+      <style>{`
+        .pp-block {
+          display: grid;
+          grid-template-columns: 1fr 1.15fr;
+          gap: 0;
+          overflow: hidden;
+          margin-bottom: 24px;
+        }
+        .pp-art {
+          position: relative;
+          min-height: 380px;
+          overflow: hidden;
+        }
+        .pp-art-tag {
+          position: absolute;
+          top: 16px; left: 16px;
+          display: inline-flex; align-items: center; gap: 7px;
+          padding: 7px 13px;
+          border-radius: 999px;
+          background: rgba(10,12,17,.7);
+          backdrop-filter: blur(8px);
+          border: 1px solid var(--border-strong);
+          font-family: var(--f-display);
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          color: var(--fg);
+        }
+        .pp-body { padding: 48px; }
+        .pp-block-rev { grid-template-columns: 1.15fr 1fr; }
+        .pp-block-rev .pp-art { order: 2; }
+        .pp-eyebrow {
+          font-family: var(--f-display); font-size: 11px; font-weight: 700;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          color: var(--accent-hi); margin-bottom: 12px;
+        }
+        .pp-title {
+          font-family: var(--f-display); font-weight: 800;
+          font-size: clamp(24px, 2.6vw, 36px); letter-spacing: -0.02em;
+          line-height: 1.1; margin: 0 0 16px;
+        }
+        .pp-lead {
+          color: var(--fg-1); font-size: 15.5px; line-height: 1.6;
+          margin: 0 0 22px;
+        }
+        .pp-points {
+          display: flex; flex-direction: column; gap: 12px;
+          margin-bottom: 24px;
+        }
+        .pp-point {
+          display: flex; gap: 11px; align-items: flex-start;
+          color: var(--fg-1); font-size: 14px; line-height: 1.5;
+        }
+        .pp-point svg { flex: 0 0 auto; margin-top: 3px; }
+        .pp-point strong { color: var(--fg); font-weight: 600; }
+        .pp-bottomline {
+          position: relative;
+          padding: 18px 18px 18px 20px;
+          background: var(--accent-soft);
+          border-left: 3px solid var(--accent);
+          border-radius: 0 var(--r) var(--r) 0;
+          color: var(--fg);
+          font-size: 14.5px; line-height: 1.55;
+          font-family: var(--f-display); font-weight: 500;
+        }
+        .pp-bl-label {
+          display: block;
+          font-size: 10px; font-weight: 700;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          color: var(--accent-hi); margin-bottom: 4px;
+        }
+
+        .compare {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          gap: 20px;
+          align-items: center;
+          max-width: 920px; margin: 0 auto;
+        }
+        .compare-col {
+          padding: 28px;
+          background: var(--bg-2);
+          border: 1px solid var(--border);
+          border-radius: var(--r-lg);
+        }
+        .compare-head {
+          display: flex; gap: 14px; align-items: center;
+          padding-bottom: 18px; margin-bottom: 18px;
+          border-bottom: 1px solid var(--border);
+        }
+        .compare-icon {
+          width: 48px; height: 48px; border-radius: 10px;
+          display: grid; place-items: center; flex: 0 0 auto;
+        }
+        .compare-name {
+          font-family: var(--f-display); font-weight: 800; font-size: 18px;
+        }
+        .compare-tag {
+          font-size: 12.5px; color: var(--fg-2); margin-top: 2px;
+        }
+        .compare-list {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-direction: column; gap: 10px;
+        }
+        .compare-list li {
+          display: flex; gap: 10px; align-items: center;
+          color: var(--fg-1); font-size: 14px;
+        }
+        .compare-plus {
+          font-family: var(--f-display); font-weight: 800; font-size: 32px;
+          color: var(--accent); text-align: center;
+        }
+        .sweet-spot {
+          display: flex; gap: 12px; align-items: flex-start;
+          max-width: 720px; margin: 40px auto 0;
+          padding: 20px 24px;
+          background: var(--bg-2);
+          border: 1px solid var(--border-strong);
+          border-radius: var(--r-lg);
+          color: var(--fg-1); font-size: 15px; line-height: 1.55;
+        }
+        .sweet-spot svg { flex: 0 0 auto; margin-top: 2px; }
+        .sweet-spot strong { color: var(--fg); }
+
+        .pp-pricing {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+          max-width: 760px; margin: 0 auto;
+        }
+        .pp-price-card {
+          padding: 32px;
+          display: flex; flex-direction: column;
+          text-align: center; align-items: center;
+        }
+        .pp-price-card.featured {
+          border-color: var(--accent);
+          box-shadow: 0 0 0 1px var(--accent-soft), var(--shadow-lg);
+        }
+        .pp-price-icon {
+          width: 52px; height: 52px; border-radius: 12px;
+          display: grid; place-items: center; margin-bottom: 18px;
+        }
+        .pp-price-name {
+          font-family: var(--f-display); font-weight: 700; font-size: 18px;
+        }
+        .pp-price-amt {
+          font-family: var(--f-display); font-weight: 800;
+          font-size: 40px; letter-spacing: -0.03em;
+          margin: 12px 0 6px;
+        }
+        .pp-price-amt span {
+          display: block;
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--fg-2);
+          margin-bottom: 2px;
+        }
+        .pp-price-note {
+          color: var(--fg-2); font-size: 13px; line-height: 1.45;
+        }
+        @media (max-width: 900px) {
+          .pp-block, .pp-block-rev { grid-template-columns: 1fr; }
+          .pp-block-rev .pp-art { order: 0; }
+          .pp-body { padding: 32px; }
+          .pp-art { min-height: 240px; }
+          .compare { grid-template-columns: 1fr; }
+          .compare-plus { padding: 4px 0; }
+          .pp-pricing { grid-template-columns: 1fr; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* Decorative SVG for PPF — layered shield film over panel */
+function PPFArt() {
+  return (
+    <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" style={{ width: "100%", height: "100%", display: "block" }}>
+      <defs>
+        <linearGradient id="ppf-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#1a1f2b"/>
+          <stop offset="100%" stopColor="#0c0f17"/>
+        </linearGradient>
+        <linearGradient id="ppf-film" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.18)"/>
+          <stop offset="50%" stopColor="rgba(255,255,255,0.04)"/>
+          <stop offset="100%" stopColor="rgba(255,255,255,0.14)"/>
+        </linearGradient>
+      </defs>
+      <rect width="500" height="400" fill="url(#ppf-bg)"/>
+      {/* Car panel curve */}
+      <path d="M40 240 Q250 150 460 240 L460 320 Q250 250 40 320 Z" fill="#222a39"/>
+      <path d="M40 240 Q250 150 460 240" fill="none" stroke="rgba(255,255,255,.15)" strokeWidth="1.5"/>
+      {/* Film layer being peeled — top corner lifted */}
+      <path d="M60 120 L440 120 L440 250 Q250 175 60 250 Z" fill="url(#ppf-film)" stroke="rgba(255,255,255,.35)" strokeWidth="1.5"/>
+      <path d="M60 120 L120 90 L460 90 L440 120 Z" fill="rgba(255,255,255,.22)" stroke="rgba(255,255,255,.4)" strokeWidth="1"/>
+      {/* Impact marks deflecting off film */}
+      {[[150,160],[250,150],[350,165],[200,200],[300,195]].map(([x,y],i)=>(
+        <g key={i}>
+          <circle cx={x} cy={y-40} r="4" fill="var(--accent-hi)" opacity="0.9"/>
+          <line x1={x} y1={y-44} x2={x+8} y2={y-58} stroke="var(--accent-hi)" strokeWidth="1.5" opacity="0.6"/>
+          <line x1={x} y1={y-44} x2={x-8} y2={y-58} stroke="var(--accent-hi)" strokeWidth="1.5" opacity="0.6"/>
+        </g>
+      ))}
+      {/* Shield emblem */}
+      <g transform="translate(250, 300)" opacity="0.9">
+        <path d="M0 -28 L24 -18 V4 C24 22 0 32 0 32 C0 32 -24 22 -24 4 V-18 Z"
+          fill="rgba(207,54,45,.18)" stroke="var(--accent-hi)" strokeWidth="2"/>
+        <path d="M-10 2 L-3 10 L11 -8" fill="none" stroke="var(--accent-hi)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </g>
+    </svg>
+  );
+}
+
+/* Decorative SVG for Ceramic — water beading on glossy surface */
+function CeramicArt() {
+  return (
+    <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" style={{ width: "100%", height: "100%", display: "block" }}>
+      <defs>
+        <linearGradient id="cer-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#16202e"/>
+          <stop offset="60%" stopColor="#0d1117"/>
+          <stop offset="100%" stopColor="#0a0d13"/>
+        </linearGradient>
+        <radialGradient id="cer-gloss" cx="35%" cy="25%" r="70%">
+          <stop offset="0%" stopColor="rgba(96,165,250,0.30)"/>
+          <stop offset="100%" stopColor="rgba(96,165,250,0)"/>
+        </radialGradient>
+        <radialGradient id="cer-drop" cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.55)"/>
+          <stop offset="40%" stopColor="rgba(190,220,255,0.20)"/>
+          <stop offset="100%" stopColor="rgba(120,170,230,0.10)"/>
+        </radialGradient>
+      </defs>
+      <rect width="500" height="400" fill="url(#cer-bg)"/>
+      <rect width="500" height="400" fill="url(#cer-gloss)"/>
+      {/* Water beads of varying sizes */}
+      {[
+        [110,120,26],[200,90,18],[300,130,32],[390,100,20],
+        [150,210,22],[260,220,30],[360,200,16],[430,250,24],
+        [90,290,18],[200,300,26],[310,300,20],[400,330,14],
+        [250,160,12],[170,150,10],[330,260,12],
+      ].map(([x,y,r],i)=>(
+        <g key={i}>
+          <ellipse cx={x} cy={y+r*0.15} rx={r} ry={r*0.92} fill="url(#cer-drop)" stroke="rgba(255,255,255,0.22)" strokeWidth="1"/>
+          <ellipse cx={x-r*0.3} cy={y-r*0.3} rx={r*0.22} ry={r*0.16} fill="rgba(255,255,255,0.7)"/>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* =========================================================
+   WHY A PDR SHOP (vs. an auto body shop) — homepage section
+   ========================================================= */
+
+const PDR_POINTS = [
+  {
+    icon: "Sparkles",
+    title: "Avoid unnecessary fillers & paint",
+    body: "Auto body shops often rely on body filler (Bondo) and repainting, which can compromise your vehicle's original finish. We do it the right way — we remove dents by massaging the metal back to its original shape: no Bondo, no fillers, no repainting when possible.",
+  },
+  {
+    icon: "ShieldCheck",
+    title: "Preserve your vehicle's original parts",
+    body: "Many traditional body shops replace panels and components, which can reduce your vehicle's value and integrity. PDR keeps it original — we maintain your factory parts and finish, helping protect your vehicle's long-term value.",
+  },
+  {
+    icon: "ThumbsUp",
+    title: "Skip the middleman",
+    body: "Body shops often subcontract dent repair to PDR specialists anyway. Why pay more and wait longer? Work directly with the experts and get it done right the first time — clear communication and high-quality PDR from start to finish, with no markups.",
+  },
+];
+
+const PDR_BENEFITS = [
+  { icon: "ShieldCheck", label: "Maintains vehicle value" },
+  { icon: "Clock", label: "Faster turnaround" },
+  { icon: "Droplet", label: "Eco-friendly repair process" },
+];
+
+function WhyPDR({ setPage }) {
+  const iconMap = { Sparkles, ShieldCheck, ThumbsUp, Clock, Droplet };
+  return (
+    <section className="section whypdr" style={{ background: "var(--bg-1)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      <div className="container">
+        <div className="section-head" style={{ alignItems: "center", textAlign: "center", margin: "0 auto 12px" }}>
+          <FadeIn><span className="chip">Why a PDR shop</span></FadeIn>
+          <FadeIn delay={80}><h2>Why choose a PDR shop instead of an auto body shop?</h2></FadeIn>
+          <FadeIn delay={160}><p className="whypdr-tagline">Smarter repair. Original results. Better value.</p></FadeIn>
+        </div>
+
+        <div className="whypdr-grid">
+          {PDR_POINTS.map((p, i) => {
+            const Ic = iconMap[p.icon];
+            return (
+              <FadeIn key={i} delay={i * 90}>
+                <div className="whypdr-card card">
+                  <div className="whypdr-num">{String(i + 1).padStart(2, "0")}</div>
+                  <div className="whypdr-icon"><Ic size={20}/></div>
+                  <h3 className="whypdr-title">{p.title}</h3>
+                  <p className="whypdr-body">{p.body}</p>
+                </div>
+              </FadeIn>
+            );
+          })}
+        </div>
+
+        <FadeIn>
+          <div className="whypdr-benefits">
+            {PDR_BENEFITS.map((b, i) => {
+              const Ic = iconMap[b.icon];
+              return (
+                <div key={i} className="whypdr-benefit">
+                  <Ic size={16} stroke="var(--accent-hi)"/>
+                  <span>{b.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="whypdr-close">
+            <span>PDR is the smarter choice. Keep it original. Keep its value.</span>
+            <button className="btn btn-primary" onClick={() => setPage("contact")}>
+              Get a free inspection <ArrowRight size={14}/>
+            </button>
+          </div>
+        </FadeIn>
+      </div>
+
+      <style>{`
+        .whypdr-tagline {
+          font-family: var(--f-display); font-weight: 700;
+          font-size: clamp(15px, 2vw, 19px); color: var(--accent-hi);
+          letter-spacing: 0.01em; margin: 0 auto;
+        }
+        .whypdr-grid {
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px;
+        }
+        .whypdr-card { padding: 30px; position: relative; overflow: hidden; }
+        .whypdr-num {
+          position: absolute; top: 12px; right: 18px;
+          font-family: var(--f-display); font-weight: 800; font-size: 42px;
+          color: var(--border-strong); line-height: 1; opacity: .55;
+        }
+        .whypdr-icon {
+          width: 46px; height: 46px; border-radius: 11px;
+          background: var(--accent-soft); color: var(--accent-hi);
+          border: 1px solid rgba(207,54,45,.25);
+          display: grid; place-items: center; margin-bottom: 18px;
+        }
+        .whypdr-title {
+          font-family: var(--f-display); font-weight: 800; font-size: 18px;
+          letter-spacing: -0.01em; line-height: 1.2; margin: 0 0 10px;
+        }
+        .whypdr-body { color: var(--fg-1); font-size: 14px; line-height: 1.6; margin: 0; }
+        .whypdr-benefits {
+          display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px;
+        }
+        .whypdr-benefit {
+          display: inline-flex; align-items: center; gap: 9px;
+          padding: 11px 18px; border-radius: 999px;
+          background: var(--bg-2); border: 1px solid var(--border-strong);
+          font-family: var(--f-display); font-weight: 600; font-size: 13.5px; color: var(--fg);
+        }
+        .whypdr-benefit svg { flex: 0 0 auto; }
+        .whypdr-close {
+          display: flex; align-items: center; justify-content: center;
+          flex-wrap: wrap; gap: 20px; text-align: center;
+          margin: 44px auto 0; max-width: 780px;
+          padding: 28px 32px; border-radius: var(--r-xl);
+          background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+          border: 1px solid var(--border-strong);
+        }
+        .whypdr-close span {
+          font-family: var(--f-display); font-weight: 800;
+          font-size: clamp(18px, 2.4vw, 24px); letter-spacing: -0.02em; color: var(--fg);
+        }
+        @media (max-width: 900px) { .whypdr-grid { grid-template-columns: 1fr; } }
+      `}</style>
+    </section>
+  );
+}
+
+Object.assign(window, { DetailingPage, PaintProtectionPage, PPFArt, CeramicArt, WhyPDR, DETAIL_GROUPS, DETAIL_ADDONS, PDR_POINTS, PDR_BENEFITS });

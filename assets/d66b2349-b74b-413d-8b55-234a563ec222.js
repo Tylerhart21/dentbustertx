@@ -4,57 +4,67 @@
    DETAILING PAGE — tiered pricing + add-ons
    ========================================================= */
 
-const DETAIL_TIERS = [{
-  id: "wash",
-  name: "The Maintenance Wash",
-  price: 99,
-  tagline: "Keep it clean between visits.",
-  icon: "Droplet",
-  features: ["Hand wash, foam &amp; rinse", "Wheels &amp; tires cleaned and dressed", "All exterior glass", "Quick interior vacuum", "Interior wipe-down"]
-}, {
+const DETAIL_GROUPS = [{
   id: "interior",
-  name: "Interior Detail",
-  price: 179,
-  tagline: "A reset for the inside.",
+  label: "Interior Packages",
   icon: "Sparkles",
-  features: ["Full vacuum — seats, carpets, trunk", "Carpet &amp; upholstery shampoo + hot-water extraction", "Steam clean of all surfaces", "Leather clean &amp; condition", "Interior glass &amp; trim dressed"]
+  blurb: "Vacuumed, dusted, and detailed from the dash to the carpets.",
+  tiers: [{
+    name: "Silver",
+    sedan: 100,
+    suv: 120,
+    features: ["Thorough vacuum (carpets, seats, doors, etc.)", "Dust interior (doors, seats, dash, etc.)"]
+  }, {
+    name: "Gold",
+    sedan: 185,
+    suv: 200,
+    featured: true,
+    badge: "Most popular",
+    features: ["Thorough vacuum (carpets, seats, doors, etc.)", "Dust interior (doors, seats, dash, etc.)", "Scrub down (doors and cupholders)", "Glass cleaned", "Trims conditioned (dash and doors)", "Floor mats wiped down"]
+  }, {
+    name: "Platinum",
+    sedan: 275,
+    suv: 300,
+    badge: "Most complete",
+    features: ["Thorough vacuum (carpets, seats, doors, etc.)", "Dust interior (doors, seats, dash, etc.)", "Scrub down and steam (doors, seats, cupholders, vents)", "Glass cleaned", "Trims conditioned (dash and doors)", "Floor mats wiped down and steamed", "Shampoo and steam (carpet and cloth seats)"]
+  }]
 }, {
   id: "exterior",
-  name: "Exterior Detail",
-  price: 179,
-  tagline: "Paint that turns heads.",
+  label: "Exterior Packages",
   icon: "CarFront",
-  features: ["Hand wash &amp; foam bath", "Clay-bar decontamination", "Machine-applied paint sealant", "Wheels &amp; tires deep-cleaned", "All exterior glass polished"]
-}, {
-  id: "full",
-  name: "The Full Detail",
-  badge: "Showroom",
-  price: 299,
-  tagline: "Everything. Inside and out.",
-  icon: "Trophy",
-  featured: true,
-  features: ["Everything in the Interior Detail", "Everything in the Exterior Detail", "Clay-bar + paint sealant", "Hot-water extraction + steam", "Leather condition + interior dressing", "Final inspection &amp; hand finish"]
+  blurb: "Hand-washed, decontaminated, and protected — wheels to glass.",
+  tiers: [{
+    name: "Silver",
+    sedan: 65,
+    suv: 80,
+    features: ["Hand wash", "Spray wax", "Wheels and tires cleaned and shined", "Glass cleaned"]
+  }, {
+    name: "Gold",
+    sedan: 100,
+    suv: 120,
+    featured: true,
+    badge: "Most popular",
+    features: ["Hand wash", "Clay bar (removes contaminants from paint)", "Spray wax", "Wheels and tires cleaned and shined", "Glass cleaned"]
+  }, {
+    name: "Platinum",
+    sedan: 140,
+    suv: 160,
+    badge: "1-yr ceramic",
+    features: ["Hand wash", "Clay bar", "1-year ceramic sealant (paint and wheels)", "Wheels and tires cleaned and shined", "Glass cleaned"]
+  }]
 }];
 const DETAIL_ADDONS = [{
-  name: "Engine Bay Detail",
-  price: "$150",
-  icon: "Wrench"
-}, {
   name: "Pet Hair Removal",
   price: "+$50",
   icon: "ThumbsUp"
 }, {
-  name: "Odor / Ozone Treatment",
-  price: "$129",
-  icon: "Droplet"
-}, {
-  name: "Headlight Restoration",
-  price: "$99",
+  name: "Headliner Cleaning",
+  price: "Add-on",
   icon: "Sparkles"
 }, {
-  name: "Single-Stage Paint Correction",
-  price: "from $299",
-  icon: "Shield"
+  name: "Engine Bay Cleaning",
+  price: "Add-on",
+  icon: "Wrench"
 }];
 function DetailingPage({
   setPage
@@ -78,34 +88,47 @@ function DetailingPage({
     className: "section"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "detail-grid"
-  }, DETAIL_TIERS.map((tier, i) => {
-    const Ic = iconMap[tier.icon];
-    return /*#__PURE__*/React.createElement(FadeIn, {
-      key: tier.id,
+  }, DETAIL_GROUPS.map(group => {
+    const GroupIc = iconMap[group.icon];
+    return /*#__PURE__*/React.createElement("div", {
+      key: group.id,
+      className: "detail-group"
+    }, /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
+      className: "detail-group-head"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "detail-group-icon"
+    }, /*#__PURE__*/React.createElement(GroupIc, {
+      size: 18
+    })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
+      className: "detail-group-title"
+    }, group.label), /*#__PURE__*/React.createElement("p", {
+      className: "detail-group-blurb"
+    }, group.blurb)))), /*#__PURE__*/React.createElement("div", {
+      className: "detail-grid detail-grid-3"
+    }, group.tiers.map((tier, i) => /*#__PURE__*/React.createElement(FadeIn, {
+      key: tier.name,
       delay: i * 70
     }, /*#__PURE__*/React.createElement("div", {
       className: "detail-card card" + (tier.featured ? " featured" : "")
     }, tier.badge && /*#__PURE__*/React.createElement("div", {
       className: "detail-badge"
-    }, tier.badge, " · Best value"), /*#__PURE__*/React.createElement("div", {
-      className: "detail-card-head"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "detail-icon"
-    }, /*#__PURE__*/React.createElement(Ic, {
-      size: 20
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "detail-tagline"
-    }, tier.tagline)), /*#__PURE__*/React.createElement("h3", {
+    }, tier.badge), /*#__PURE__*/React.createElement("h4", {
       className: "detail-name"
     }, tier.name), /*#__PURE__*/React.createElement("div", {
       className: "detail-price"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "detail-price-row"
     }, /*#__PURE__*/React.createElement("span", {
-      className: "detail-price-from"
-    }, "Starting at"), /*#__PURE__*/React.createElement("span", {
+      className: "detail-price-veh"
+    }, "Sedan"), /*#__PURE__*/React.createElement("span", {
       className: "detail-price-num"
-    }, "$", tier.price)), /*#__PURE__*/React.createElement("ul", {
+    }, "$", tier.sedan)), /*#__PURE__*/React.createElement("div", {
+      className: "detail-price-row"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "detail-price-veh"
+    }, "Truck & SUV"), /*#__PURE__*/React.createElement("span", {
+      className: "detail-price-num"
+    }, "$", tier.suv))), /*#__PURE__*/React.createElement("ul", {
       className: "detail-features"
     }, tier.features.map((f, j) => /*#__PURE__*/React.createElement("li", {
       key: j
@@ -113,32 +136,28 @@ function DetailingPage({
       size: 15,
       stroke: tier.featured ? "var(--accent-hi)" : "#4ade80",
       strokeWidth: 2.4
-    }), /*#__PURE__*/React.createElement("span", {
-      dangerouslySetInnerHTML: {
-        __html: f
-      }
-    })))), /*#__PURE__*/React.createElement("button", {
+    }), /*#__PURE__*/React.createElement("span", null, f)))), /*#__PURE__*/React.createElement("button", {
       className: "btn " + (tier.featured ? "btn-primary" : "btn-ghost"),
       style: {
         width: "100%",
         marginTop: "auto"
       },
       onClick: () => setPage("contact")
-    }, "Book ", tier.name.replace("The ", ""), " ", /*#__PURE__*/React.createElement(ArrowRight, {
+    }, "Book ", group.id === "interior" ? "Interior" : "Exterior", " ", tier.name, " ", /*#__PURE__*/React.createElement(ArrowRight, {
       size: 14
-    }))));
-  })), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
+    })))))));
+  }), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
     className: "addons"
   }, /*#__PURE__*/React.createElement("div", {
     className: "addons-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "chip"
-  }, "Add-ons"), /*#__PURE__*/React.createElement("h3", {
+  }, "Add-ons & fine print"), /*#__PURE__*/React.createElement("h3", {
     className: "addons-title"
-  }, "Make it yours."), /*#__PURE__*/React.createElement("p", {
+  }, "A few things to know."), /*#__PURE__*/React.createElement("p", {
     className: "addons-sub"
-  }, "Stack any of these onto a package or book them on their own.")), /*#__PURE__*/React.createElement("div", {
-    className: "addons-grid"
+  }, "Every detail includes one set of floor mats cleaned. These extras are billed separately.")), /*#__PURE__*/React.createElement("div", {
+    className: "addons-grid addons-grid-3"
   }, DETAIL_ADDONS.map((a, i) => {
     const Ic = iconMap[a.icon];
     return /*#__PURE__*/React.createElement("div", {
@@ -155,7 +174,7 @@ function DetailingPage({
     }, a.price));
   })))), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("p", {
     className: "detail-footnote"
-  }, "Pricing varies by vehicle size and condition. SUVs, trucks, and heavily soiled vehicles are priced on inspection. Contact us for an exact quote."))), /*#__PURE__*/React.createElement("style", null, `
+  }, "All details include only one set of floor mats cleaned. $50 pet hair removal fee if needed. Headliner cleaning is a separate charge. Engine bay cleaning is a separate charge. Pricing reflects standard condition; heavily soiled vehicles may be quoted on inspection."))), /*#__PURE__*/React.createElement("style", null, `
           .detail-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -291,6 +310,47 @@ function DetailingPage({
             .detail-grid { grid-template-columns: 1fr; }
             .addons-grid { grid-template-columns: 1fr 1fr; }
             .addons { padding: 24px; }
+          }
+
+          /* Grouped detailing menu (Interior / Exterior, dual pricing) */
+          .detail-group { margin-bottom: 60px; }
+          .detail-group:last-of-type { margin-bottom: 28px; }
+          .detail-group-head {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 22px; padding-top: 6px;
+          }
+          .detail-group-icon {
+            width: 44px; height: 44px; border-radius: 11px;
+            background: var(--accent-soft); color: var(--accent-hi);
+            border: 1px solid rgba(207,54,45,.25);
+            display: grid; place-items: center; flex: 0 0 auto;
+          }
+          .detail-group-title {
+            font-family: var(--f-display); font-weight: 800;
+            font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.02em; margin: 0;
+          }
+          .detail-group-blurb { color: var(--fg-2); font-size: 14px; margin: 4px 0 0; }
+          .detail-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+            margin-bottom: 0; padding-top: 0;
+          }
+          .detail-card { padding-top: 34px; overflow: visible; }
+          .detail-price { gap: 4px; }
+          .detail-price-row {
+            display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+          }
+          .detail-price-veh {
+            font-family: var(--f-display); font-size: 12px; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-2);
+          }
+          .detail-price-row .detail-price-num { font-size: 27px; }
+          .addons-grid-3 { grid-template-columns: repeat(3, 1fr); }
+          @media (max-width: 1000px) {
+            .detail-grid-3 { grid-template-columns: 1fr 1fr; }
+            .addons-grid-3 { grid-template-columns: 1fr; }
+          }
+          @media (max-width: 560px) {
+            .detail-grid-3 { grid-template-columns: 1fr; }
           }
         `)), /*#__PURE__*/React.createElement(FinalCTA, {
     setPage: setPage
@@ -922,11 +982,165 @@ function CeramicArt() {
     fill: "rgba(255,255,255,0.7)"
   }))));
 }
+
+/* =========================================================
+   WHY A PDR SHOP (vs. an auto body shop) — homepage section
+   ========================================================= */
+
+const PDR_POINTS = [{
+  icon: "Sparkles",
+  title: "Avoid unnecessary fillers & paint",
+  body: "Auto body shops often rely on body filler (Bondo) and repainting, which can compromise your vehicle's original finish. We do it the right way — we remove dents by massaging the metal back to its original shape: no Bondo, no fillers, no repainting when possible."
+}, {
+  icon: "ShieldCheck",
+  title: "Preserve your vehicle's original parts",
+  body: "Many traditional body shops replace panels and components, which can reduce your vehicle's value and integrity. PDR keeps it original — we maintain your factory parts and finish, helping protect your vehicle's long-term value."
+}, {
+  icon: "ThumbsUp",
+  title: "Skip the middleman",
+  body: "Body shops often subcontract dent repair to PDR specialists anyway. Why pay more and wait longer? Work directly with the experts and get it done right the first time — clear communication and high-quality PDR from start to finish, with no markups."
+}];
+const PDR_BENEFITS = [{
+  icon: "ShieldCheck",
+  label: "Maintains vehicle value"
+}, {
+  icon: "Clock",
+  label: "Faster turnaround"
+}, {
+  icon: "Droplet",
+  label: "Eco-friendly repair process"
+}];
+function WhyPDR({
+  setPage
+}) {
+  const iconMap = {
+    Sparkles,
+    ShieldCheck,
+    ThumbsUp,
+    Clock,
+    Droplet
+  };
+  return /*#__PURE__*/React.createElement("section", {
+    className: "section whypdr",
+    style: {
+      background: "var(--bg-1)",
+      borderTop: "1px solid var(--border)",
+      borderBottom: "1px solid var(--border)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "section-head",
+    style: {
+      alignItems: "center",
+      textAlign: "center",
+      margin: "0 auto 12px"
+    }
+  }, /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("span", {
+    className: "chip"
+  }, "Why a PDR shop")), /*#__PURE__*/React.createElement(FadeIn, {
+    delay: 80
+  }, /*#__PURE__*/React.createElement("h2", null, "Why choose a PDR shop instead of an auto body shop?")), /*#__PURE__*/React.createElement(FadeIn, {
+    delay: 160
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "whypdr-tagline"
+  }, "Smarter repair. Original results. Better value."))), /*#__PURE__*/React.createElement("div", {
+    className: "whypdr-grid"
+  }, PDR_POINTS.map((p, i) => {
+    const Ic = iconMap[p.icon];
+    return /*#__PURE__*/React.createElement(FadeIn, {
+      key: i,
+      delay: i * 90
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "whypdr-card card"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "whypdr-num"
+    }, String(i + 1).padStart(2, "0")), /*#__PURE__*/React.createElement("div", {
+      className: "whypdr-icon"
+    }, /*#__PURE__*/React.createElement(Ic, {
+      size: 20
+    })), /*#__PURE__*/React.createElement("h3", {
+      className: "whypdr-title"
+    }, p.title), /*#__PURE__*/React.createElement("p", {
+      className: "whypdr-body"
+    }, p.body)));
+  })), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
+    className: "whypdr-benefits"
+  }, PDR_BENEFITS.map((b, i) => {
+    const Ic = iconMap[b.icon];
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      className: "whypdr-benefit"
+    }, /*#__PURE__*/React.createElement(Ic, {
+      size: 16,
+      stroke: "var(--accent-hi)"
+    }), /*#__PURE__*/React.createElement("span", null, b.label));
+  }))), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
+    className: "whypdr-close"
+  }, /*#__PURE__*/React.createElement("span", null, "PDR is the smarter choice. Keep it original. Keep its value."), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary",
+    onClick: () => setPage("contact")
+  }, "Get a free inspection ", /*#__PURE__*/React.createElement(ArrowRight, {
+    size: 14
+  }))))), /*#__PURE__*/React.createElement("style", null, `
+        .whypdr-tagline {
+          font-family: var(--f-display); font-weight: 700;
+          font-size: clamp(15px, 2vw, 19px); color: var(--accent-hi);
+          letter-spacing: 0.01em; margin: 0 auto;
+        }
+        .whypdr-grid {
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px;
+        }
+        .whypdr-card { padding: 30px; position: relative; overflow: hidden; }
+        .whypdr-num {
+          position: absolute; top: 12px; right: 18px;
+          font-family: var(--f-display); font-weight: 800; font-size: 42px;
+          color: var(--border-strong); line-height: 1; opacity: .55;
+        }
+        .whypdr-icon {
+          width: 46px; height: 46px; border-radius: 11px;
+          background: var(--accent-soft); color: var(--accent-hi);
+          border: 1px solid rgba(207,54,45,.25);
+          display: grid; place-items: center; margin-bottom: 18px;
+        }
+        .whypdr-title {
+          font-family: var(--f-display); font-weight: 800; font-size: 18px;
+          letter-spacing: -0.01em; line-height: 1.2; margin: 0 0 10px;
+        }
+        .whypdr-body { color: var(--fg-1); font-size: 14px; line-height: 1.6; margin: 0; }
+        .whypdr-benefits {
+          display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px;
+        }
+        .whypdr-benefit {
+          display: inline-flex; align-items: center; gap: 9px;
+          padding: 11px 18px; border-radius: 999px;
+          background: var(--bg-2); border: 1px solid var(--border-strong);
+          font-family: var(--f-display); font-weight: 600; font-size: 13.5px; color: var(--fg);
+        }
+        .whypdr-benefit svg { flex: 0 0 auto; }
+        .whypdr-close {
+          display: flex; align-items: center; justify-content: center;
+          flex-wrap: wrap; gap: 20px; text-align: center;
+          margin: 44px auto 0; max-width: 780px;
+          padding: 28px 32px; border-radius: var(--r-xl);
+          background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+          border: 1px solid var(--border-strong);
+        }
+        .whypdr-close span {
+          font-family: var(--f-display); font-weight: 800;
+          font-size: clamp(18px, 2.4vw, 24px); letter-spacing: -0.02em; color: var(--fg);
+        }
+        @media (max-width: 900px) { .whypdr-grid { grid-template-columns: 1fr; } }
+      `));
+}
 Object.assign(window, {
   DetailingPage,
   PaintProtectionPage,
   PPFArt,
   CeramicArt,
-  DETAIL_TIERS,
-  DETAIL_ADDONS
+  WhyPDR,
+  DETAIL_GROUPS,
+  DETAIL_ADDONS,
+  PDR_POINTS,
+  PDR_BENEFITS
 });

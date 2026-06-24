@@ -331,6 +331,17 @@ function Footer({
   }, /*#__PURE__*/React.createElement(Mail, {
     size: 14
   }), " hello@dentbustersllc.com"), /*#__PURE__*/React.createElement("a", {
+    className: "footer-link",
+    href: "https://dentbustersllc.com",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/React.createElement(Building, {
+    size: 14
+  }), " dentbustersllc.com"), /*#__PURE__*/React.createElement("a", {
+    className: "footer-link"
+  }, /*#__PURE__*/React.createElement(Star, {
+    size: 14
+  }), " Dent Busters Auto Hail Repair"), /*#__PURE__*/React.createElement("a", {
     className: "footer-link"
   }, /*#__PURE__*/React.createElement(MapPin, {
     size: 14
