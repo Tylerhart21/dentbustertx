@@ -71,6 +71,21 @@ for (const [uuid, entry] of Object.entries(manifest)) {
   fs.writeFileSync(path.join(ASSET_DIR, uuid + '.' + ext), bytesOf(entry));
 }
 
+// Use the logo as the site favicon + apple-touch-icon (resized down from the
+// full-res logo so the tab icon isn't a 600KB download).
+const logoRes = extResources.find(r => r.id === 'logo');
+if (logoRes && manifest[logoRes.uuid]) {
+  const logoBytes = bytesOf(manifest[logoRes.uuid]);
+  try {
+    const sharp = (await import('sharp')).default;
+    await sharp(logoBytes).resize(128, 128, { fit: 'cover' }).png().toFile(path.join(OUT_DIR, 'favicon.png'));
+    await sharp(logoBytes).resize(180, 180, { fit: 'cover' }).png().toFile(path.join(OUT_DIR, 'apple-touch-icon.png'));
+  } catch {
+    fs.writeFileSync(path.join(OUT_DIR, 'favicon.png'), logoBytes);
+    fs.writeFileSync(path.join(OUT_DIR, 'apple-touch-icon.png'), logoBytes);
+  }
+}
+
 for (const [uuid, entry] of Object.entries(manifest)) {
   if (uuid === babelUuid) continue;
   const ext = EXT[entry.mime] || 'bin';
@@ -91,7 +106,10 @@ for (const r of extResources) {
   const ext = EXT[manifest[r.uuid].mime] || 'bin';
   resourceMap[r.id] = 'assets/' + r.uuid + '.' + ext;
 }
-template = template.replace(/<head[^>]*>/i, m => m + '\n<script>window.__resources = ' + JSON.stringify(resourceMap) + ';</script>');
+template = template.replace(/<head[^>]*>/i, m => m +
+  '\n<link rel="icon" type="image/png" href="/favicon.png">' +
+  '\n<link rel="apple-touch-icon" href="/apple-touch-icon.png">' +
+  '\n<script>window.__resources = ' + JSON.stringify(resourceMap) + ';</script>');
 
 fs.writeFileSync(path.join(OUT_DIR, 'index.html'), template);
 console.log('Built index.html (' + fs.statSync(path.join(OUT_DIR, 'index.html')).size + ' bytes) +',
