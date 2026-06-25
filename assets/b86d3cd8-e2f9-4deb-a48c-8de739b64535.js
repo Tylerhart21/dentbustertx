@@ -327,10 +327,10 @@ function Footer({
     size: 14
   }), " (214) 859-7534"), /*#__PURE__*/React.createElement("a", {
     className: "footer-link",
-    href: "mailto:hello@dentbustersllc.com"
+    href: "mailto:dentbustersllc@gmail.com"
   }, /*#__PURE__*/React.createElement(Mail, {
     size: 14
-  }), " hello@dentbustersllc.com"), /*#__PURE__*/React.createElement("a", {
+  }), " dentbustersllc@gmail.com"), /*#__PURE__*/React.createElement("a", {
     className: "footer-link",
     href: "https://dentbusterstx.com",
     target: "_blank",

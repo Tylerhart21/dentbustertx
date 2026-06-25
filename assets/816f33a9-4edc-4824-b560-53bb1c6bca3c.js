@@ -1084,11 +1084,11 @@ function ContactPage() {
   }), /*#__PURE__*/React.createElement(ContactQuickCard, {
     icon: "Mail",
     title: "Email",
-    value: "hello@dentbustersllc.com",
+    value: "dentbustersllc@gmail.com",
     sub: "Replies within 1 business hour",
     cta: {
       label: "Send email",
-      href: "mailto:hello@dentbustersllc.com"
+      href: "mailto:dentbustersllc@gmail.com"
     }
   }), /*#__PURE__*/React.createElement(ContactQuickCard, {
     icon: "MapPin",

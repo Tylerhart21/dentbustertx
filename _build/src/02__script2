@@ -198,7 +198,7 @@ function Footer({ setPage }) {
           <div>
             <h4 className="footer-h">Get in touch</h4>
             <a className="footer-link" href="tel:+12148597534"><Phone size={14}/> (214) 859-7534</a>
-            <a className="footer-link" href="mailto:hello@dentbustersllc.com"><Mail size={14}/> hello@dentbustersllc.com</a>
+            <a className="footer-link" href="mailto:dentbustersllc@gmail.com"><Mail size={14}/> dentbustersllc@gmail.com</a>
             <a className="footer-link" href="https://dentbusterstx.com" target="_blank" rel="noopener noreferrer"><Building size={14}/> dentbusterstx.com</a>
             <a className="footer-link" href="https://www.instagram.com/dentbustersautohailrepair/" target="_blank" rel="noopener noreferrer"><Instagram size={14}/> Instagram</a>
             <a className="footer-link" href="https://www.facebook.com/profile.php/?id=61556206236698" target="_blank" rel="noopener noreferrer"><Facebook size={14}/> Facebook</a>
