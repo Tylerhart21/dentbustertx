@@ -1,5 +1,9 @@
 /* global React, FadeIn, PageHeader */
 
+/* Web3Forms access key — submissions are emailed to the address configured
+   for this key in the Web3Forms dashboard. */
+const WEB3FORMS_KEY = "fbfe1c13-6b5d-4adb-a2be-1a5647b3e773";
+
 /* ============ Booking Wizard ============ */
 
 const DAMAGE_TYPES = [{
@@ -84,6 +88,8 @@ function BookingWizard({
   const [data, set, merge] = useBookingForm();
   const [errors, setErrors] = React.useState({});
   const [submitted, setSubmitted] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState("");
   const steps = ["Vehicle", "Damage", "Contact", "Schedule"];
   const validate = () => {
     const e = {};
@@ -109,9 +115,55 @@ function BookingWizard({
     setErrors(e);
     return Object.keys(e).length === 0;
   };
+  const submit = async () => {
+    setSubmitting(true);
+    setSubmitError("");
+    const dateStr = data.date ? (() => {
+      const [y, m, d] = data.date.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    })() : "";
+    const payload = {
+      access_key: WEB3FORMS_KEY,
+      subject: "New inspection request — " + (data.name || "Website"),
+      from_name: "Dent Busters Website",
+      replyto: data.email,
+      Name: data.name,
+      Phone: data.phone,
+      Email: data.email,
+      ZIP: data.zip,
+      Vehicle: (data.year + " " + data.make + " " + data.model).trim(),
+      "Damage type": (DAMAGE_TYPES.find(t => t.id === data.damageType) || {}).label || data.damageType,
+      Severity: (SEVERITY.find(s => s.id === data.severity) || {}).label || data.severity,
+      "Photos selected": String(data.photos.length),
+      "Requested date": dateStr,
+      "Requested time": data.time,
+      Notes: data.notes || "—"
+    };
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+      if (result.success) setSubmitted(true);else setSubmitError(result.message || "Something went wrong. Please call or text us at (214) 859-7534.");
+    } catch (err) {
+      setSubmitError("We couldn't send your request just now — please call or text us at (214) 859-7534.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
   const next = () => {
     if (!validate()) return;
-    if (step < steps.length - 1) setStep(step + 1);else setSubmitted(true);
+    if (step < steps.length - 1) setStep(step + 1);else submit();
   };
   const back = () => {
     if (step > 0) setStep(step - 1);
@@ -147,17 +199,22 @@ function BookingWizard({
     data: data,
     set: set,
     errors: errors
-  })), /*#__PURE__*/React.createElement("div", {
+  })), submitError && /*#__PURE__*/React.createElement("div", {
+    className: "booking-error",
+    role: "alert"
+  }, submitError), /*#__PURE__*/React.createElement("div", {
     className: "booking-nav"
   }, step > 0 ? /*#__PURE__*/React.createElement("button", {
     className: "btn btn-ghost",
-    onClick: back
+    onClick: back,
+    disabled: submitting
   }, /*#__PURE__*/React.createElement(ChevronLeft, {
     size: 15
   }), " Back") : /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("button", {
     className: "btn btn-primary btn-lg",
-    onClick: next
-  }, step === steps.length - 1 ? "Book inspection" : "Continue", /*#__PURE__*/React.createElement(ArrowRight, {
+    onClick: next,
+    disabled: submitting
+  }, step === steps.length - 1 ? submitting ? "Sending…" : "Book inspection" : "Continue", !submitting && /*#__PURE__*/React.createElement(ArrowRight, {
     size: 15
   }))), /*#__PURE__*/React.createElement("style", null, `
         .booking {
@@ -179,6 +236,15 @@ function BookingWizard({
         @keyframes stepIn {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        .booking-error {
+          margin-bottom: 16px;
+          padding: 14px 16px;
+          border-radius: var(--r);
+          background: rgba(207,54,45,.10);
+          border: 1px solid rgba(207,54,45,.35);
+          color: var(--accent-hi);
+          font-size: 14px; line-height: 1.5;
         }
         .booking-nav {
           display: flex; justify-content: space-between; align-items: center;
@@ -933,7 +999,7 @@ function BookingSuccess({
     className: "bk-success-title"
   }, "You’re booked."), /*#__PURE__*/React.createElement("p", {
     className: "bk-success-sub"
-  }, "We’ll be in touch at ", /*#__PURE__*/React.createElement("strong", null, data.phone), " within an hour to confirm details. A confirmation has been sent to ", /*#__PURE__*/React.createElement("strong", null, data.email), "."), /*#__PURE__*/React.createElement("div", {
+  }, "Your request is in. We’ll reach out at ", /*#__PURE__*/React.createElement("strong", null, data.phone), " within one business hour to confirm the details — or by email at ", /*#__PURE__*/React.createElement("strong", null, data.email), " if that’s easier."), /*#__PURE__*/React.createElement("div", {
     className: "bk-success-card card"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bk-success-card-header"
