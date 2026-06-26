@@ -1,9 +1,5 @@
 /* global React, FadeIn, PageHeader */
 
-/* Web3Forms access key — submissions are emailed to the address configured
-   for this key in the Web3Forms dashboard. */
-const WEB3FORMS_KEY = "fbfe1c13-6b5d-4adb-a2be-1a5647b3e773";
-
 /* ============ Booking Wizard ============ */
 
 const DAMAGE_TYPES = [
@@ -94,31 +90,27 @@ function BookingWizard({ embedded = false }) {
       return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
     })() : "";
     const payload = {
-      access_key: WEB3FORMS_KEY,
-      subject: "New inspection request — " + (data.name || "Website"),
-      from_name: "Dent Busters Website",
-      replyto: data.email,
-      Name: data.name,
-      Phone: data.phone,
-      Email: data.email,
-      ZIP: data.zip,
-      Vehicle: (data.year + " " + data.make + " " + data.model).trim(),
-      "Damage type": (DAMAGE_TYPES.find(t => t.id === data.damageType) || {}).label || data.damageType,
-      Severity: (SEVERITY.find(s => s.id === data.severity) || {}).label || data.severity,
-      "Photos selected": String(data.photos.length),
-      "Requested date": dateStr,
-      "Requested time": data.time,
-      Notes: data.notes || "—",
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      zip: data.zip,
+      vehicle: (data.year + " " + data.make + " " + data.model).trim(),
+      damageType: (DAMAGE_TYPES.find(t => t.id === data.damageType) || {}).label || data.damageType,
+      severity: (SEVERITY.find(s => s.id === data.severity) || {}).label || data.severity,
+      photos: String(data.photos.length),
+      date: dateStr,
+      time: data.time,
+      notes: data.notes || "—",
     };
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/lead", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const result = await res.json();
-      if (result.success) setSubmitted(true);
-      else setSubmitError(result.message || "Something went wrong. Please call or text us at (214) 859-7534.");
+      const result = await res.json().catch(() => ({}));
+      if (res.ok && result.success) setSubmitted(true);
+      else setSubmitError("We couldn't send your request just now — please call or text us at (214) 859-7534.");
     } catch (err) {
       setSubmitError("We couldn't send your request just now — please call or text us at (214) 859-7534.");
     } finally {
