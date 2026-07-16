@@ -215,7 +215,7 @@ function App() {
     setPage: setPage
   }), /*#__PURE__*/React.createElement("main", null, pageEl), /*#__PURE__*/React.createElement(Footer, {
     setPage: setPage
-  }), t.showFloatingChat && /*#__PURE__*/React.createElement(FloatingChat, {
+  }), /*#__PURE__*/React.createElement(LightningLayer, null), t.showFloatingChat && /*#__PURE__*/React.createElement(FloatingChat, {
     setPage: setPage
   }), /*#__PURE__*/React.createElement(TweaksPanel, {
     title: "Tweaks"

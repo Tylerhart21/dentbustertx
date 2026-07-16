@@ -149,6 +149,10 @@ function App() {
       <main>{pageEl}</main>
       <Footer setPage={setPage} />
 
+      {/* Site-wide storm. Rendered last so its <style> wins, and fixed so the
+          lightning keeps striking across every page as you scroll. */}
+      <LightningLayer />
+
       {t.showFloatingChat && <FloatingChat setPage={setPage} />}
 
       <TweaksPanel title="Tweaks">
