@@ -101,20 +101,17 @@ const BOLT_SHAPES = [
   },
 ];
 
-/* Scattered across the full width and height of the viewport, not just the
-   edges. `shape` indexes BOLT_SHAPES; `flip` mirrors it so repeats read as
-   different bolts. Every bolt loops on its own odd duration so strikes never
-   fall into a visible pattern. */
+/* Left and right edges only — the content runs down the middle, so the storm
+   frames it instead of striking through it. `shape` indexes BOLT_SHAPES; the
+   right side is mirrored. Every bolt loops on its own odd duration so strikes
+   never fall into a visible pattern. */
 const BOLTS = [
-  { left: "2%",  top: "-8%", h: "58%", shape: 0, w: 1,    dur: 4.3,  delay: 0.2 },
-  { left: "14%", top: "34%", h: "54%", shape: 2, w: 0.6,  dur: 9.1,  delay: 5.4, flip: true },
-  { left: "27%", top: "-4%", h: "50%", shape: 4, w: 0.7,  dur: 6.7,  delay: 2.6 },
-  { left: "39%", top: "42%", h: "52%", shape: 5, w: 0.55, dur: 11.3, delay: 7.9, flip: true },
-  { left: "51%", top: "-6%", h: "46%", shape: 1, w: 0.5,  dur: 8.3,  delay: 4.1 },
-  { left: "62%", top: "38%", h: "56%", shape: 3, w: 0.65, dur: 5.9,  delay: 1.7, flip: true },
-  { left: "74%", top: "-8%", h: "60%", shape: 3, w: 0.85, dur: 5.1,  delay: 1.1 },
-  { left: "86%", top: "30%", h: "54%", shape: 1, w: 0.7,  dur: 7.9,  delay: 3.3, flip: true },
-  { left: "95%", top: "-5%", h: "62%", shape: 0, w: 0.9,  dur: 6.1,  delay: 6.4, flip: true },
+  { side: "left",  top: "-8%", h: "62%", shape: 0, w: 1,    dur: 4.3,  delay: 0.2 },
+  { side: "left",  top: "26%", h: "58%", shape: 4, w: 0.75, dur: 6.7,  delay: 2.6 },
+  { side: "left",  top: "52%", h: "50%", shape: 2, w: 0.6,  dur: 9.1,  delay: 5.4 },
+  { side: "right", top: "-6%", h: "64%", shape: 3, w: 0.95, dur: 5.1,  delay: 1.1 },
+  { side: "right", top: "24%", h: "58%", shape: 1, w: 0.7,  dur: 7.9,  delay: 3.3 },
+  { side: "right", top: "50%", h: "52%", shape: 5, w: 0.6,  dur: 11.3, delay: 6.8 },
 ];
 
 function LightningLayer() {
@@ -126,11 +123,10 @@ function LightningLayer() {
         return (
           <svg
             key={i}
-            className={"bolt" + (b.flip ? " bolt-flip" : "")}
+            className={"bolt bolt-" + b.side}
             viewBox="0 0 100 640"
             preserveAspectRatio="none"
             style={{
-              left: b.left,
               top: b.top,
               height: b.h,
               "--bw": b.w,
@@ -178,15 +174,15 @@ function LightningLayer() {
         }
         .bolt {
           position: absolute;
-          width: clamp(70px, 8vw, 150px);
-          margin-left: -4vw;
+          width: clamp(90px, 11vw, 190px);
           opacity: 0;
           animation-name: boltStrike;
           animation-timing-function: linear;
           animation-iteration-count: infinite;
           will-change: opacity;
         }
-        .bolt-flip { transform: scaleX(-1); }
+        .bolt-left  { left: -3%; }
+        .bolt-right { right: -3%; transform: scaleX(-1); }
         .bolt path {
           fill: none;
           stroke-linecap: round;
@@ -231,7 +227,9 @@ function LightningLayer() {
           .storm { display: none; }
         }
         @media (max-width: 760px) {
-          .bolt { width: 62px; margin-left: -7vw; }
+          .bolt { width: 70px; }
+          .bolt-left  { left: -8%; }
+          .bolt-right { right: -8%; }
         }
       `}</style>
     </div>
