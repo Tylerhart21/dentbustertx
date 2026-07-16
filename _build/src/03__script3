@@ -71,13 +71,41 @@ function FadeIn({ children, delay = 0, as: As = "div", style, ...rest }) {
 }
 
 /* ------ HERO ------ */
-/* Storm layer — jagged bolts down each edge of the hero, like the shop banner.
-   Each bolt runs its own odd-length loop so strikes never sync into a pattern. */
+/* Storm layer — forked bolts down each edge of the hero, like the shop banner.
+   Real lightning forks and travels in short irregular steps, so each bolt is a
+   trunk plus branches. Every bolt loops on its own odd duration so strikes
+   never sync into a visible pattern. */
 const BOLTS = [
-  { d: "M78 0 L44 132 L72 140 L30 300 L62 306 L18 470 L54 476 L20 620", side: "left",  top: "-4%",  h: "72%", dur: 7.3,  delay: 0.4 },
-  { d: "M30 0 L64 118 L36 126 L74 268 L44 276 L86 430 L52 438 L82 600", side: "left",  top: "26%", h: "64%", dur: 11.1, delay: 3.9 },
-  { d: "M28 0 L62 140 L34 148 L76 312 L46 320 L84 486 L50 494 L80 640", side: "right", top: "-8%", h: "76%", dur: 9.7,  delay: 1.8 },
-  { d: "M74 0 L40 126 L70 134 L28 286 L60 294 L22 452 L56 460 L26 610", side: "right", top: "30%", h: "62%", dur: 13.3, delay: 6.2 },
+  {
+    side: "left", top: "-5%", h: "78%", dur: 4.3, delay: 0.2, w: 1,
+    d: "M70 0 L52 58 L68 68 L46 148 L62 158 L40 246 L56 256 L34 352 L50 362 L28 458 L44 468 L24 560 L38 570 L20 640",
+    branches: ["M46 148 L22 200 L36 208 L14 266", "M40 246 L70 312 L56 320 L80 388"],
+  },
+  {
+    side: "left", top: "22%", h: "66%", dur: 6.7, delay: 2.6, w: 0.8,
+    d: "M34 0 L54 66 L38 76 L60 160 L42 170 L66 258 L48 268 L72 356 L54 366 L76 452 L58 462 L80 548",
+    branches: ["M60 160 L86 214 L72 222 L94 278"],
+  },
+  {
+    side: "left", top: "48%", h: "50%", dur: 9.1, delay: 5.4, w: 0.65,
+    d: "M56 0 L40 72 L54 82 L34 172 L48 182 L26 274 L42 284 L22 380",
+    branches: ["M34 172 L60 226 L48 234 L70 292"],
+  },
+  {
+    side: "right", top: "-8%", h: "80%", dur: 5.1, delay: 1.1, w: 1,
+    d: "M30 0 L48 62 L32 72 L54 154 L36 164 L60 252 L42 262 L66 358 L48 368 L72 462 L54 472 L76 566 L60 576 L80 640",
+    branches: ["M54 154 L78 206 L64 214 L86 272", "M60 252 L30 318 L44 326 L20 394"],
+  },
+  {
+    side: "right", top: "18%", h: "68%", dur: 7.9, delay: 3.3, w: 0.8,
+    d: "M66 0 L46 70 L62 80 L40 166 L58 176 L34 264 L52 274 L28 362 L46 372 L22 458 L38 468 L18 552",
+    branches: ["M40 166 L14 220 L28 228 L6 284"],
+  },
+  {
+    side: "right", top: "44%", h: "52%", dur: 11.3, delay: 6.8, w: 0.65,
+    d: "M42 0 L58 74 L44 84 L64 174 L50 184 L72 276 L56 286 L78 384",
+    branches: ["M64 174 L38 228 L52 236 L30 294"],
+  },
 ];
 
 function LightningLayer() {
@@ -90,11 +118,21 @@ function LightningLayer() {
           className={"bolt bolt-" + b.side}
           viewBox="0 0 100 640"
           preserveAspectRatio="none"
-          style={{ top: b.top, height: b.h, animationDuration: b.dur + "s", animationDelay: b.delay + "s" }}
+          style={{
+            top: b.top,
+            height: b.h,
+            "--bw": b.w,
+            animationDuration: b.dur + "s",
+            animationDelay: b.delay + "s",
+          }}
         >
-          {/* wide glow pass, then the hot core */}
-          <path d={b.d} className="bolt-glow" />
-          <path d={b.d} className="bolt-core" />
+          {[b.d].concat(b.branches || []).map((d, j) => (
+            <g key={j} className={j === 0 ? "seg seg-main" : "seg seg-branch"}>
+              <path d={d} className="bolt-halo" />
+              <path d={d} className="bolt-glow" />
+              <path d={d} className="bolt-core" />
+            </g>
+          ))}
         </svg>
       ))}
     </div>
@@ -110,6 +148,17 @@ function Hero({ setPage }) {
       <div className="hero-grain" />
       <div className="grid-bg" />
       <LightningLayer />
+
+      {/* Roughens the headline's edges so the type reads distressed, the way
+          the painted banner lettering does. */}
+      <svg className="svg-defs" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="grunge" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
 
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         <div className="hero-centered">
@@ -289,41 +338,54 @@ function Hero({ setPage }) {
         }
         .bolt {
           position: absolute;
-          width: clamp(90px, 11vw, 190px);
+          width: clamp(110px, 13vw, 230px);
           opacity: 0;
           animation-name: boltStrike;
           animation-timing-function: linear;
           animation-iteration-count: infinite;
           will-change: opacity;
         }
-        .bolt-left  { left: -2%; }
-        .bolt-right { right: -2%; transform: scaleX(-1); }
-        .bolt-glow {
+        .bolt-left  { left: -3%; }
+        .bolt-right { right: -3%; transform: scaleX(-1); }
+        .bolt path {
           fill: none;
-          stroke: var(--accent);
-          stroke-width: 9;
           stroke-linecap: round;
           stroke-linejoin: round;
-          opacity: .85;
-          filter: drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 30px var(--accent));
+          vector-effect: non-scaling-stroke;
+        }
+        /* Three passes: soft halo -> red glow -> white-hot core. That layering
+           is what makes it read as light instead of a red line. */
+        .bolt-halo {
+          stroke: var(--accent);
+          stroke-width: calc(16px * var(--bw, 1));
+          opacity: .28;
+          filter: blur(7px);
+        }
+        .bolt-glow {
+          stroke: var(--accent-hi, var(--accent));
+          stroke-width: calc(5.5px * var(--bw, 1));
+          opacity: .95;
+          filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 22px var(--accent));
         }
         .bolt-core {
-          fill: none;
           stroke: #fff;
-          stroke-width: 2.4;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          filter: drop-shadow(0 0 6px #fff);
+          stroke-width: calc(1.7px * var(--bw, 1));
+          filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 11px rgba(255,190,190,.95));
         }
-        /* Flicker rather than a clean fade — reads as a real strike. */
+        .seg-branch .bolt-halo { stroke-width: calc(9px * var(--bw, 1)); opacity: .2; }
+        .seg-branch .bolt-glow { stroke-width: calc(3px * var(--bw, 1)); opacity: .8; }
+        .seg-branch .bolt-core { stroke-width: calc(1px * var(--bw, 1)); }
+        /* Stutter, don't fade — a real strike flickers several times fast. */
         @keyframes boltStrike {
-          0%, 90%, 100% { opacity: 0; }
-          90.6% { opacity: 1; }
-          91.4% { opacity: .15; }
-          92.2% { opacity: .9; }
-          93.4% { opacity: .25; }
-          94.2% { opacity: .7; }
-          95.6% { opacity: 0; }
+          0%, 84%, 100% { opacity: 0; }
+          84.5% { opacity: .95; }
+          85.2% { opacity: .08; }
+          86%   { opacity: 1; }
+          87%   { opacity: .18; }
+          88%   { opacity: .9; }
+          89.2% { opacity: .06; }
+          90.2% { opacity: .6; }
+          92%   { opacity: 0; }
         }
         @media (prefers-reduced-motion: reduce) {
           .bolt { animation: none; opacity: .1; }
@@ -335,20 +397,29 @@ function Hero({ setPage }) {
           .bolt-right { right: -7%; }
         }
 
+        .svg-defs { position: absolute; width: 0; height: 0; }
         .hero-h1 {
           font-size: clamp(48px, 7.5vw, 108px);
           margin: 24px 0 0;
-          letter-spacing: -0.028em;
-          /* The shop banner's wordmark leans right; Anton ships upright only,
-             so slant it to match. */
+          letter-spacing: -0.03em;
+          /* Match the banner wordmark. Anton ships upright and clean, so the
+             lean, the black outline, the drop shadow and the distressed edge
+             all have to be added on top of it. */
           display: inline-block;
-          transform: skewX(-8deg);
+          transform: skewX(-10deg);
+          -webkit-text-stroke: 3px #080a0f;
+          paint-order: stroke fill;
+          text-shadow: 0 6px 0 rgba(0,0,0,.5), 0 16px 30px rgba(0,0,0,.6);
+          filter: url(#grunge);
         }
+        /* Solid bright red like the banner's "BUSTERS" — a gradient fill turns
+           muddy once the black outline is stroked behind it. */
         .hero-h1-accent {
-          background: linear-gradient(135deg, var(--accent-hi) 0%, var(--accent) 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
+          background: none;
+          -webkit-background-clip: border-box;
+          background-clip: border-box;
+          color: #ff2b2b;
+          -webkit-text-fill-color: #ff2b2b;
         }
         /* Brand tagline band — mirrors the shop banner's slanted white stripe */
         .hero-tagline {
