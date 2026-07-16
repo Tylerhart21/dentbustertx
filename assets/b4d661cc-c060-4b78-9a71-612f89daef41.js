@@ -101,6 +101,62 @@ function FadeIn({
 }
 
 /* ------ HERO ------ */
+/* Storm layer — jagged bolts down each edge of the hero, like the shop banner.
+   Each bolt runs its own odd-length loop so strikes never sync into a pattern. */
+const BOLTS = [{
+  d: "M78 0 L44 132 L72 140 L30 300 L62 306 L18 470 L54 476 L20 620",
+  side: "left",
+  top: "-4%",
+  h: "72%",
+  dur: 7.3,
+  delay: 0.4
+}, {
+  d: "M30 0 L64 118 L36 126 L74 268 L44 276 L86 430 L52 438 L82 600",
+  side: "left",
+  top: "26%",
+  h: "64%",
+  dur: 11.1,
+  delay: 3.9
+}, {
+  d: "M28 0 L62 140 L34 148 L76 312 L46 320 L84 486 L50 494 L80 640",
+  side: "right",
+  top: "-8%",
+  h: "76%",
+  dur: 9.7,
+  delay: 1.8
+}, {
+  d: "M74 0 L40 126 L70 134 L28 286 L60 294 L22 452 L56 460 L26 610",
+  side: "right",
+  top: "30%",
+  h: "62%",
+  dur: 13.3,
+  delay: 6.2
+}];
+function LightningLayer() {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "storm",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "storm-flash"
+  }), BOLTS.map((b, i) => /*#__PURE__*/React.createElement("svg", {
+    key: i,
+    className: "bolt bolt-" + b.side,
+    viewBox: "0 0 100 640",
+    preserveAspectRatio: "none",
+    style: {
+      top: b.top,
+      height: b.h,
+      animationDuration: b.dur + "s",
+      animationDelay: b.delay + "s"
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: b.d,
+    className: "bolt-glow"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: b.d,
+    className: "bolt-core"
+  }))));
+}
 function Hero({
   setPage
 }) {
@@ -115,7 +171,7 @@ function Hero({
     className: "hero-grain"
   }), /*#__PURE__*/React.createElement("div", {
     className: "grid-bg"
-  }), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(LightningLayer, null), /*#__PURE__*/React.createElement("div", {
     className: "container",
     style: {
       position: "relative",
@@ -273,10 +329,84 @@ function Hero({
           filter: drop-shadow(0 12px 32px rgba(207,54,45,.35)) drop-shadow(0 4px 12px rgba(0,0,0,.5));
           margin-bottom: 24px;
         }
+        /* ---- Storm: red lightning down each edge, like the shop banner ---- */
+        .storm {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          overflow: hidden;
+        }
+        .storm-flash {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(130% 80% at 50% 0%, rgba(255,90,90,.55), transparent 62%);
+          opacity: 0;
+          animation: stormFlash 8.6s linear infinite;
+        }
+        @keyframes stormFlash {
+          0%, 88%, 100% { opacity: 0; }
+          89%   { opacity: .13; }
+          90.5% { opacity: .03; }
+          92%   { opacity: .09; }
+          94%   { opacity: 0; }
+        }
+        .bolt {
+          position: absolute;
+          width: clamp(90px, 11vw, 190px);
+          opacity: 0;
+          animation-name: boltStrike;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          will-change: opacity;
+        }
+        .bolt-left  { left: -2%; }
+        .bolt-right { right: -2%; transform: scaleX(-1); }
+        .bolt-glow {
+          fill: none;
+          stroke: var(--accent);
+          stroke-width: 9;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          opacity: .85;
+          filter: drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 30px var(--accent));
+        }
+        .bolt-core {
+          fill: none;
+          stroke: #fff;
+          stroke-width: 2.4;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          filter: drop-shadow(0 0 6px #fff);
+        }
+        /* Flicker rather than a clean fade — reads as a real strike. */
+        @keyframes boltStrike {
+          0%, 90%, 100% { opacity: 0; }
+          90.6% { opacity: 1; }
+          91.4% { opacity: .15; }
+          92.2% { opacity: .9; }
+          93.4% { opacity: .25; }
+          94.2% { opacity: .7; }
+          95.6% { opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .bolt { animation: none; opacity: .1; }
+          .storm-flash { animation: none; }
+        }
+        @media (max-width: 760px) {
+          .bolt { width: 74px; }
+          .bolt-left { left: -7%; }
+          .bolt-right { right: -7%; }
+        }
+
         .hero-h1 {
           font-size: clamp(48px, 7.5vw, 108px);
           margin: 24px 0 0;
           letter-spacing: -0.028em;
+          /* The shop banner's wordmark leans right; Anton ships upright only,
+             so slant it to match. */
+          display: inline-block;
+          transform: skewX(-8deg);
         }
         .hero-h1-accent {
           background: linear-gradient(135deg, var(--accent-hi) 0%, var(--accent) 100%);
