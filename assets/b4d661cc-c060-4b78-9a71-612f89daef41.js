@@ -133,49 +133,49 @@ const BOLTS = [{
   top: "-8%",
   h: "62%",
   shape: 0,
-  w: 1,
-  dur: 4.3,
-  delay: 0.2
+  w: 0.85,
+  dur: 7.3,
+  delay: 0.4
 }, {
   side: "left",
   top: "26%",
   h: "58%",
   shape: 4,
-  w: 0.75,
-  dur: 6.7,
-  delay: 2.6
+  w: 0.6,
+  dur: 10.9,
+  delay: 4.1
 }, {
   side: "left",
   top: "52%",
   h: "50%",
   shape: 2,
-  w: 0.6,
-  dur: 9.1,
-  delay: 5.4
+  w: 0.5,
+  dur: 14.9,
+  delay: 8.6
 }, {
   side: "right",
   top: "-6%",
   h: "64%",
   shape: 3,
-  w: 0.95,
-  dur: 5.1,
-  delay: 1.1
+  w: 0.8,
+  dur: 8.9,
+  delay: 2.2
 }, {
   side: "right",
   top: "24%",
   h: "58%",
   shape: 1,
-  w: 0.7,
-  dur: 7.9,
-  delay: 3.3
+  w: 0.58,
+  dur: 12.7,
+  delay: 6.3
 }, {
   side: "right",
   top: "50%",
   h: "52%",
   shape: 5,
-  w: 0.6,
-  dur: 11.3,
-  delay: 6.8
+  w: 0.5,
+  dur: 17.3,
+  delay: 11.1
 }];
 function LightningLayer() {
   return /*#__PURE__*/React.createElement("div", {
@@ -231,11 +231,11 @@ function LightningLayer() {
           animation: stormFlash 8.6s linear infinite;
         }
         @keyframes stormFlash {
-          0%, 88%, 100% { opacity: 0; }
-          89%   { opacity: .1; }
-          90.5% { opacity: .02; }
-          92%   { opacity: .07; }
-          94%   { opacity: 0; }
+          0%, 91%, 100% { opacity: 0; }
+          91.6% { opacity: .055; }
+          92.6% { opacity: .012; }
+          93.6% { opacity: .038; }
+          95.4% { opacity: 0; }
         }
         .bolt {
           position: absolute;
@@ -258,15 +258,15 @@ function LightningLayer() {
            is what makes it read as light instead of a red line. */
         .bolt-halo {
           stroke: var(--accent);
-          stroke-width: calc(15px * var(--bw, 1));
-          opacity: .26;
+          stroke-width: calc(13px * var(--bw, 1));
+          opacity: .18;
           filter: blur(7px);
         }
         .bolt-glow {
           stroke: var(--accent-hi, var(--accent));
-          stroke-width: calc(5px * var(--bw, 1));
-          opacity: .92;
-          filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 20px var(--accent));
+          stroke-width: calc(4.5px * var(--bw, 1));
+          opacity: .8;
+          filter: drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 16px var(--accent));
         }
         .bolt-core {
           stroke: #fff;
@@ -278,15 +278,15 @@ function LightningLayer() {
         .seg-branch .bolt-core { stroke-width: calc(1px * var(--bw, 1)); }
         /* Stutter, don't fade — a real strike flickers several times fast. */
         @keyframes boltStrike {
-          0%, 84%, 100% { opacity: 0; }
-          84.5% { opacity: .9; }
-          85.2% { opacity: .08; }
-          86%   { opacity: 1; }
-          87%   { opacity: .18; }
-          88%   { opacity: .85; }
-          89.2% { opacity: .06; }
-          90.2% { opacity: .55; }
-          92%   { opacity: 0; }
+          0%, 88%, 100% { opacity: 0; }
+          88.4% { opacity: .6; }
+          89%   { opacity: .05; }
+          89.7% { opacity: .72; }
+          90.6% { opacity: .12; }
+          91.4% { opacity: .55; }
+          92.4% { opacity: .04; }
+          93.2% { opacity: .3; }
+          94.6% { opacity: 0; }
         }
         @media (prefers-reduced-motion: reduce) {
           .storm { display: none; }
