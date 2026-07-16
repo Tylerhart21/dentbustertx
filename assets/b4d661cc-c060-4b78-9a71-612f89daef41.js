@@ -140,6 +140,14 @@ function Hero({
   }, "Hail damage?", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     className: "hero-h1-accent"
   }, "We handle everything."))), /*#__PURE__*/React.createElement(FadeIn, {
+    delay: 140
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hero-tagline"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hero-tagline-a"
+  }, "Zero hassle."), /*#__PURE__*/React.createElement("span", {
+    className: "hero-tagline-b"
+  }, "Zero dents."))), /*#__PURE__*/React.createElement(FadeIn, {
     delay: 180
   }, /*#__PURE__*/React.createElement("div", {
     className: "hero-subline"
@@ -275,6 +283,33 @@ function Hero({
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
+        }
+        /* Brand tagline band — mirrors the shop banner's slanted white stripe */
+        .hero-tagline {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 10px;
+          margin-top: 24px;
+          padding: 9px 22px;
+          background: #f3f5f9;
+          border-radius: 3px;
+          transform: skewX(-8deg);
+          box-shadow: 0 10px 34px rgba(0,0,0,.55);
+        }
+        .hero-tagline span {
+          display: inline-block;
+          transform: skewX(8deg);
+          font-family: var(--f-display);
+          font-weight: 800;
+          font-size: clamp(17px, 2.4vw, 30px);
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          line-height: 1;
+        }
+        .hero-tagline-a { color: #0a0c11; }
+        .hero-tagline-b { color: var(--accent); }
+        @media (max-width: 520px) {
+          .hero-tagline { padding: 8px 16px; gap: 7px; }
         }
         .hero-subline {
           margin-top: 22px;

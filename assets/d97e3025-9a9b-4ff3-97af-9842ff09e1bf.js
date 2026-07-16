@@ -1,13 +1,19 @@
 /* global React, ReactDOM, Nav, Footer, Hero, ServicesGrid, ProcessPreview, InsuranceBar, StatsBand, FinalCTA, ServicesPage, ProcessPage, ReviewsPage, ContactPage, BookingWizard, ReviewsCarousel, FadeIn, useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakColor, TweakToggle */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "#cf362d",
+  "accent": "#e11b22",
   "heroVariant": "graphic",
-  "fontPair": "archivo-inter",
+  "fontPair": "banner",
   "showMarquee": true,
   "showFloatingChat": false
 } /*EDITMODE-END*/;
 const ACCENT_PRESETS = {
+  "#e11b22": {
+    name: "Banner Red",
+    hi: "#ff4d4d",
+    "2": "#f22a30",
+    dim: "#8f1015"
+  },
   "#cf362d": {
     name: "Logo Red",
     hi: "#ee5d52",
@@ -39,11 +45,23 @@ const ACCENT_PRESETS = {
     dim: "#1d4ed8"
   }
 };
+
+// headline = big statements only (h1/h2). display = UI chrome (nav, buttons,
+// labels) — a condensed face like Anton is unreadable at those sizes.
+// *Weights: some faces ship a single weight (Anton); asking the Google Fonts
+// API for the full range makes it reject the whole request.
 const FONT_PAIRS = {
+  "banner": {
+    headline: "Anton",
+    headlineWeights: "400",
+    display: "Archivo",
+    body: "Inter",
+    label: "Anton · Archivo · Inter (banner)"
+  },
   "archivo-inter": {
     display: "Archivo",
     body: "Inter",
-    label: "Archivo · Inter (default)"
+    label: "Archivo · Inter"
   },
   "spacegrotesk-inter": {
     display: "Space Grotesk",
@@ -54,11 +72,6 @@ const FONT_PAIRS = {
     display: "Manrope",
     body: "Manrope",
     label: "Manrope"
-  },
-  "anton-inter": {
-    display: "Anton",
-    body: "Inter",
-    label: "Anton · Inter (heavy)"
   }
 };
 function App() {
@@ -101,10 +114,22 @@ function App() {
       document.head.appendChild(l);
       return l;
     })();
-    const families = new Set([pair.display, pair.body]);
-    link.href = "https://fonts.googleapis.com/css2?" + [...families].map(f => `family=${encodeURIComponent(f)}:wght@400;500;600;700;800;900`).join("&") + "&display=swap";
+    const DEFAULT_W = "400;500;600;700;800;900";
+    const specs = [];
+    const add = (fam, w) => {
+      if (!fam || specs.some(s => s.fam === fam)) return;
+      specs.push({
+        fam,
+        w: w === undefined ? DEFAULT_W : w
+      });
+    };
+    add(pair.headline, pair.headlineWeights);
+    add(pair.display, pair.displayWeights);
+    add(pair.body, pair.bodyWeights);
+    link.href = "https://fonts.googleapis.com/css2?" + specs.map(s => `family=${encodeURIComponent(s.fam)}${s.w ? `:wght@${s.w}` : ""}`).join("&") + "&display=swap";
     document.documentElement.style.setProperty("--f-display", `"${pair.display}", system-ui, sans-serif`);
     document.documentElement.style.setProperty("--f-body", `"${pair.body}", system-ui, sans-serif`);
+    document.documentElement.style.setProperty("--f-headline", `"${pair.headline || pair.display}", "${pair.display}", system-ui, sans-serif`);
   }, [t.fontPair]);
   const pageEl = (() => {
     switch (page) {
@@ -139,7 +164,28 @@ function App() {
         });
     }
   })();
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Nav, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("style", null, `
+        :root {
+          --gold: #f5b325;
+          --gold-hi: #ffd166;
+          --gold-soft: rgba(245,179,37,.12);
+        }
+        /* The heavy condensed face is for big statements only — the banner uses
+           it for the wordmark, not the small print. Nav/buttons/labels keep
+           --f-display so they stay readable. font-synthesis:none because Anton
+           ships one weight and would otherwise get faux-bolded into mush. */
+        h1, h2, .display, .hero-h1, .hero-tagline span {
+          font-family: var(--f-headline, var(--f-display));
+          font-synthesis: none;
+        }
+        /* Gold on the trust row, mirroring the gold badges on the shop banner.
+           Declared after those rules ship their own <style>, hence !important. */
+        .ins-icon {
+          background: var(--gold-soft) !important;
+          color: var(--gold-hi) !important;
+          border-color: rgba(245,179,37,.28) !important;
+        }
+      `), /*#__PURE__*/React.createElement(Nav, {
     page: page,
     setPage: setPage
   }), /*#__PURE__*/React.createElement("main", null, pageEl), /*#__PURE__*/React.createElement(Footer, {
