@@ -471,9 +471,13 @@ function Hero({
 
         .svg-defs { position: absolute; width: 0; height: 0; }
         .hero-h1 {
-          font-size: clamp(48px, 7.5vw, 108px);
+          /* The banner is ALL CAPS — Anton's lowercase reads nothing like the
+             wordmark. Caps run wider, so the size comes down a touch. */
+          text-transform: uppercase;
+          font-size: clamp(38px, 6.2vw, 92px);
+          line-height: 0.92;
           margin: 24px 0 0;
-          letter-spacing: -0.03em;
+          letter-spacing: 0.005em;
           /* Match the banner wordmark. Anton ships upright and clean, so the
              lean, the black outline, the drop shadow and the distressed edge
              all have to be added on top of it. */

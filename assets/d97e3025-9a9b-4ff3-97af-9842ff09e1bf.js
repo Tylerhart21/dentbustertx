@@ -174,9 +174,34 @@ function App() {
            it for the wordmark, not the small print. Nav/buttons/labels keep
            --f-display so they stay readable. font-synthesis:none because Anton
            ships one weight and would otherwise get faux-bolded into mush. */
-        h1, h2, .display, .hero-h1, .hero-tagline span {
+        h1, h2, .display, .hero-h1, .hero-tagline span, .logo-word {
           font-family: var(--f-headline, var(--f-display));
           font-synthesis: none;
+        }
+        /* Nav/footer wordmark — same treatment as the banner lettering:
+           heavy condensed caps, leaning right, outlined. */
+        .logo-word {
+          font-weight: 400;
+          font-size: 21px;
+          line-height: 1;
+          letter-spacing: 0.01em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          color: var(--fg);
+          transform: skewX(-8deg);
+          transform-origin: left center;
+          -webkit-text-stroke: 1.2px #080a0f;
+          paint-order: stroke fill;
+        }
+        .logo-sub {
+          font-family: var(--f-display);
+          font-size: 8.5px;
+          font-weight: 700;
+          letter-spacing: 0.26em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          color: var(--accent-hi);
+          margin-top: 3px;
         }
         /* Gold on the trust row, mirroring the gold badges on the shop banner.
            Declared after those rules ship their own <style>, hence !important. */

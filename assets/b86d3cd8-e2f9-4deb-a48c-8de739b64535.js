@@ -46,24 +46,10 @@ function Logo({
       lineHeight: 1.05
     }
   }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "var(--f-display)",
-      fontWeight: 800,
-      fontSize: 17,
-      letterSpacing: "-0.01em",
-      whiteSpace: "nowrap"
-    }
-  }, "DENT BUSTERS"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "var(--f-display)",
-      fontSize: 9,
-      fontWeight: 600,
-      letterSpacing: "0.24em",
-      color: "var(--accent-hi)",
-      marginTop: 2,
-      whiteSpace: "nowrap"
-    }
-  }, "AUTO HAIL REPAIR")));
+    className: "logo-word"
+  }, "Dent Busters"), /*#__PURE__*/React.createElement("div", {
+    className: "logo-sub"
+  }, "Auto Hail Repair")));
 }
 function Nav({
   page,

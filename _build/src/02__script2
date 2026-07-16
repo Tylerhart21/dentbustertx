@@ -17,16 +17,8 @@ function Logo({ compact }) {
         style={{ width: 48, height: 48, objectFit: "contain", display: "block", flex: "0 0 auto" }}/>
       {!compact && (
         <div style={{ lineHeight: 1.05 }}>
-          <div style={{
-            fontFamily: "var(--f-display)", fontWeight: 800,
-            fontSize: 17, letterSpacing: "-0.01em",
-            whiteSpace: "nowrap",
-          }}>DENT BUSTERS</div>
-          <div style={{
-            fontFamily: "var(--f-display)", fontSize: 9, fontWeight: 600,
-            letterSpacing: "0.24em", color: "var(--accent-hi)", marginTop: 2,
-            whiteSpace: "nowrap",
-          }}>AUTO HAIL REPAIR</div>
+          <div className="logo-word">Dent Busters</div>
+          <div className="logo-sub">Auto Hail Repair</div>
         </div>
       )}
     </div>
