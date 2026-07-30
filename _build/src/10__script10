@@ -89,6 +89,7 @@ function App() {
       case "services": return <ServicesPage setPage={setPage}/>;
       case "detailing": return <DetailingPage setPage={setPage}/>;
       case "protection": return <PaintProtectionPage setPage={setPage}/>;
+      case "wraps":    return <WrapsPage setPage={setPage}/>;
       case "process":  return <ProcessPage setPage={setPage}/>;
       case "reviews":  return <ReviewsPage setPage={setPage}/>;
       case "contact":  return <ContactPage setPage={setPage}/>;

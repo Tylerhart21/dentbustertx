@@ -145,6 +145,10 @@ function App() {
         return /*#__PURE__*/React.createElement(PaintProtectionPage, {
           setPage: setPage
         });
+      case "wraps":
+        return /*#__PURE__*/React.createElement(WrapsPage, {
+          setPage: setPage
+        });
       case "process":
         return /*#__PURE__*/React.createElement(ProcessPage, {
           setPage: setPage

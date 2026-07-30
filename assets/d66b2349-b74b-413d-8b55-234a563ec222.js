@@ -1133,14 +1133,116 @@ function WhyPDR({
         @media (max-width: 900px) { .whypdr-grid { grid-template-columns: 1fr; } }
       `));
 }
+
+/* =========================================================
+   VEHICLE WRAPS PAGE — custom printed wrap portfolio
+   ========================================================= */
+
+const WRAPS = [{
+  img: "/media/wraps/stormz.jpg",
+  name: "StormZ USA",
+  type: "Full commercial truck wrap"
+}, {
+  img: "/media/wraps/troop221.jpg",
+  name: "Boy Scout Troop 221",
+  type: "Enclosed trailer wrap"
+}, {
+  img: "/media/wraps/heyday.jpg",
+  name: "HeyDay Outdoor",
+  type: "Full cargo trailer wrap"
+}, {
+  img: "/media/wraps/zoomin.jpg",
+  name: "Zoomin Groomin",
+  type: "Mobile van wrap"
+}];
+const WRAP_TYPES = ["Commercial fleets", "Box & cargo trailers", "Vans", "Trucks & SUVs", "Partial & full wraps", "Personal vehicles"];
+function WrapsPage({
+  setPage
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "page-enter"
+  }, /*#__PURE__*/React.createElement(PageHeader, {
+    eyebrow: "Custom vehicle wraps",
+    title: "Turn your vehicle into a billboard that works 24/7.",
+    sub: "Full and partial wraps for commercial fleets, trailers, vans, and personal vehicles — designed, printed, and installed in-house. One clean install, thousands of impressions a day."
+  }), /*#__PURE__*/React.createElement("section", {
+    className: "section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "wrap-grid"
+  }, WRAPS.map((w, i) => /*#__PURE__*/React.createElement(FadeIn, {
+    key: i,
+    delay: i * 70
+  }, /*#__PURE__*/React.createElement("figure", {
+    className: "wrap-card card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "wrap-photo"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: w.img,
+    alt: w.name + " — " + w.type,
+    loading: "lazy"
+  })), /*#__PURE__*/React.createElement("figcaption", {
+    className: "wrap-cap"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "wrap-name"
+  }, w.name), /*#__PURE__*/React.createElement("span", {
+    className: "wrap-type"
+  }, w.type)))))), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
+    className: "wrap-strip"
+  }, WRAP_TYPES.map((t, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: "wrap-chip"
+  }, t)))), /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("div", {
+    className: "wrap-cta"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
+    className: "wrap-cta-title"
+  }, "Have a design, or need one built?"), /*#__PURE__*/React.createElement("p", {
+    className: "wrap-cta-sub"
+  }, "Send us your logo and vehicle — we handle the design, printing, and installation, and we back the work.")), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary btn-lg",
+    onClick: () => setPage("contact")
+  }, "Get a wrap quote ", /*#__PURE__*/React.createElement(ArrowRight, {
+    size: 15
+  }))))), /*#__PURE__*/React.createElement("style", null, `
+          .wrap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          .wrap-card { overflow: hidden; padding: 0; }
+          .wrap-photo { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-2); }
+          .wrap-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s var(--ease); }
+          .wrap-card:hover .wrap-photo img { transform: scale(1.04); }
+          .wrap-cap { display: flex; flex-direction: column; gap: 2px; padding: 16px 20px; }
+          .wrap-name { font-family: var(--f-display); font-weight: 700; font-size: 16px; }
+          .wrap-type { color: var(--fg-2); font-size: 13px; }
+          .wrap-strip { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 44px; }
+          .wrap-chip {
+            padding: 10px 16px; border-radius: 999px;
+            background: var(--bg-2); border: 1px solid var(--border-strong);
+            font-family: var(--f-display); font-weight: 600; font-size: 13px; color: var(--fg);
+          }
+          .wrap-cta {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px; margin-top: 44px; padding: 32px;
+            border-radius: var(--r-xl);
+            background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+            border: 1px solid var(--border-strong);
+          }
+          .wrap-cta-title { font-family: var(--f-display); font-weight: 800; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.01em; margin: 0 0 6px; }
+          .wrap-cta-sub { color: var(--fg-2); font-size: 14.5px; line-height: 1.55; margin: 0; max-width: 540px; }
+          @media (max-width: 700px) { .wrap-grid { grid-template-columns: 1fr; } }
+        `)), /*#__PURE__*/React.createElement(FinalCTA, {
+    setPage: setPage
+  }));
+}
 Object.assign(window, {
   DetailingPage,
   PaintProtectionPage,
   PPFArt,
   CeramicArt,
   WhyPDR,
+  WrapsPage,
   DETAIL_GROUPS,
   DETAIL_ADDONS,
   PDR_POINTS,
-  PDR_BENEFITS
+  PDR_BENEFITS,
+  WRAPS
 });

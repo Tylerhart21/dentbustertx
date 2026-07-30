@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { id: "services", label: "Services" },
   { id: "detailing", label: "Detailing" },
   { id: "protection", label: "Paint Protection" },
+  { id: "wraps", label: "Wraps" },
   { id: "process", label: "Process" },
   { id: "reviews", label: "Reviews" },
   { id: "contact", label: "Contact" },

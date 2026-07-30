@@ -861,17 +861,21 @@ const SERVICES = [
     img: "https://images.unsplash.com/photo-1568605114849-c4f5b8bff0f3?w=1200&q=85&auto=format&fit=crop",
     blurb: "We come to you. Free pickup and delivery anywhere in the DFW metroplex while we keep your car safe.",
     accent: "#22c55e" },
+  { id: "wraps", title: "Custom Vehicle Wraps", icon: "Building", page: "wraps",
+    img: "/media/wraps/stormz.jpg",
+    blurb: "Commercial fleets, trailers, and vans — full custom wraps, designed, printed, and installed in-house.",
+    accent: "#3b82f6" },
 ];
 
 function ServicesGrid({ setPage }) {
-  const iconMap = { Droplet, CarFront, Wrench, Sparkles, Truck };
+  const iconMap = { Droplet, CarFront, Wrench, Sparkles, Truck, Building };
   return (
     <section className="section" data-screen-label="02 Services">
       <div className="container">
         <div className="section-head">
           <FadeIn><span className="chip">What we do</span></FadeIn>
           <FadeIn delay={80}><h2>Built to make hail damage<br/>look like it never happened.</h2></FadeIn>
-          <FadeIn delay={160}><p>Five services. One promise: your car leaves looking factory-new — paint, panels, and finish untouched.</p></FadeIn>
+          <FadeIn delay={160}><p>From invisible hail repair to head-turning custom wraps — everything to fix, protect, and brand your vehicle.</p></FadeIn>
         </div>
 
         <div className="services-grid">
@@ -879,7 +883,7 @@ function ServicesGrid({ setPage }) {
             const Ic = iconMap[s.icon];
             return (
               <FadeIn key={s.id} delay={i * 60}>
-                <div className="service-card card" onClick={() => setPage("services")}>
+                <div className="service-card card" onClick={() => setPage(s.page || "services")}>
                   <div className="service-card-art">
                     <img src={s.img} alt={s.title} className="service-card-photo"
                       loading="lazy"

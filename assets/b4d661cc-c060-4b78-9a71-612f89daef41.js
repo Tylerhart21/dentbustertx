@@ -1067,6 +1067,14 @@ const SERVICES = [{
   img: "https://images.unsplash.com/photo-1568605114849-c4f5b8bff0f3?w=1200&q=85&auto=format&fit=crop",
   blurb: "We come to you. Free pickup and delivery anywhere in the DFW metroplex while we keep your car safe.",
   accent: "#22c55e"
+}, {
+  id: "wraps",
+  title: "Custom Vehicle Wraps",
+  icon: "Building",
+  page: "wraps",
+  img: "/media/wraps/stormz.jpg",
+  blurb: "Commercial fleets, trailers, and vans — full custom wraps, designed, printed, and installed in-house.",
+  accent: "#3b82f6"
 }];
 function ServicesGrid({
   setPage
@@ -1076,7 +1084,8 @@ function ServicesGrid({
     CarFront,
     Wrench,
     Sparkles,
-    Truck
+    Truck,
+    Building
   };
   return /*#__PURE__*/React.createElement("section", {
     className: "section",
@@ -1091,7 +1100,7 @@ function ServicesGrid({
     delay: 80
   }, /*#__PURE__*/React.createElement("h2", null, "Built to make hail damage", /*#__PURE__*/React.createElement("br", null), "look like it never happened.")), /*#__PURE__*/React.createElement(FadeIn, {
     delay: 160
-  }, /*#__PURE__*/React.createElement("p", null, "Five services. One promise: your car leaves looking factory-new — paint, panels, and finish untouched."))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("p", null, "From invisible hail repair to head-turning custom wraps — everything to fix, protect, and brand your vehicle."))), /*#__PURE__*/React.createElement("div", {
     className: "services-grid"
   }, SERVICES.map((s, i) => {
     const Ic = iconMap[s.icon];
@@ -1100,7 +1109,7 @@ function ServicesGrid({
       delay: i * 60
     }, /*#__PURE__*/React.createElement("div", {
       className: "service-card card",
-      onClick: () => setPage("services")
+      onClick: () => setPage(s.page || "services")
     }, /*#__PURE__*/React.createElement("div", {
       className: "service-card-art"
     }, /*#__PURE__*/React.createElement("img", {

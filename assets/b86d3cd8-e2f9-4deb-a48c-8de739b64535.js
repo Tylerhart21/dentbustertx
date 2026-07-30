@@ -13,6 +13,9 @@ const NAV_ITEMS = [{
   id: "protection",
   label: "Paint Protection"
 }, {
+  id: "wraps",
+  label: "Wraps"
+}, {
   id: "process",
   label: "Process"
 }, {
