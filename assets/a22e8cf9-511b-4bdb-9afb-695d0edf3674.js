@@ -233,6 +233,21 @@ const Instagram = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/Re
 const Facebook = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
   d: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
 }));
+const Sun = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("circle", {
+  cx: "12",
+  cy: "12",
+  r: "4"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+}));
+const Wand = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M4 20 13.5 10.5"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M17 3l1.4 3.6L22 8l-3.6 1.4L17 13l-1.4-3.6L12 8l3.6-1.4z"
+}));
+const Flame = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"
+}));
 const Google = p => /*#__PURE__*/React.createElement("svg", {
   width: p.size || 18,
   height: p.size || 18,
@@ -281,5 +296,8 @@ Object.assign(window, {
   FileCheck,
   Google,
   Instagram,
-  Facebook
+  Facebook,
+  Sun,
+  Wand,
+  Flame
 });

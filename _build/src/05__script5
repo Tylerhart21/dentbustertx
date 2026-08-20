@@ -3,63 +3,130 @@
 const DETAILED_SERVICES = [
   {
     id: "hail",
-    title: "Hail Damage Repair",
+    title: "Auto Hail Repair",
     icon: "Droplet",
     img: "https://images.unsplash.com/photo-1547038577-da80abbc4f19?w=1200&q=85&auto=format&fit=crop",
     headline: "Paintless dent repair, panel by panel.",
-    blurb: "Texas hailstorms hit hard. Our PDR technicians have repaired thousands of vehicles after every major storm event since 2014 — bringing them back to factory condition without touching your paint.",
+    blurb: "Texas hailstorms hit hard. Our PDR technicians have repaired thousands of vehicles after every major storm since 2014 — back to factory condition without touching your paint.",
     bullets: [
-      "Massage-out technique — no body filler, no paint",
+      "Massage-out technique — no filler, no paint",
       "Lifetime warranty on every dent",
       "Direct insurance coordination",
-      "Free pickup and delivery anywhere in DFW",
+      "Free pickup and delivery across DFW",
       "Most claims close in under 14 days",
     ],
     price: "From $0 out of pocket with insurance",
     accent: "#e11d48",
   },
   {
-    id: "ceramic",
-    title: "Ceramic Coating",
+    id: "detailing",
+    title: "Auto Detailing",
     icon: "Sparkles",
+    page: "detailing",
     img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=85&auto=format&fit=crop",
-    headline: "Years of protection in a single application.",
-    blurb: "Hydrophobic, scratch-resistant, UV-stable ceramic coating. Free with any qualifying hail repair claim — or available as a standalone service. Multi-year warranty included.",
+    headline: "Detailed like it's ours.",
+    blurb: "Interior and exterior detailing — vacuum, steam, shampoo, hand wash, clay bar, and sealant. Pick a package or build your own with add-ons.",
     bullets: [
-      "9H hardness ceramic chemistry",
-      "5-year, 7-year, and lifetime packages",
-      "Hydrophobic finish — water beads and rolls off",
-      "Included free with qualifying hail repairs",
+      "Interior & exterior packages",
+      "Steam and hot-water extraction",
+      "Hand wash, clay bar & sealant",
+      "Priced by vehicle size",
     ],
-    price: "Free with hail claim · $899+ standalone",
+    price: "Interior from $100 · Exterior from $65",
     accent: "#3b82f6",
   },
   {
-    id: "delivery",
-    title: "Pickup & Delivery",
-    icon: "Truck",
-    img: "https://images.unsplash.com/photo-1568605114849-c4f5b8bff0f3?w=1200&q=85&auto=format&fit=crop",
-    headline: "You don't drive to us. We drive to you.",
-    blurb: "Anywhere in the Dallas-Fort Worth metroplex. We come to your home or office, pick up your vehicle, and return it cleaner than we found it.",
+    id: "tint",
+    title: "Window Tinting",
+    icon: "Sun",
+    img: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=85&auto=format&fit=crop",
+    headline: "Cooler cabin. Cleaner look.",
+    blurb: "Professional window film that blocks heat and UV, kills glare, and adds privacy — installed clean, with no bubbles, and backed for life.",
     bullets: [
-      "Free within 30 miles of McKinney",
-      "Loaner vehicles available for extended repairs",
-      "Photo updates throughout the repair",
-      "Returned washed and detailed at no charge",
+      "Heat and UV rejection",
+      "Glare reduction and privacy",
+      "Ceramic and standard films",
+      "Lifetime film warranty",
     ],
-    price: "Free for hail claim customers",
+    price: "Quoted by vehicle & film",
+    accent: "#0ea5e9",
+  },
+  {
+    id: "ppf",
+    title: "Paint Protection Film",
+    icon: "Shield",
+    page: "protection",
+    img: "/media/ppf/tesla.jpg",
+    headline: "An invisible shield for your paint.",
+    blurb: "Thick, self-healing urethane film over your most vulnerable panels — rock chips, sand, and scratches stop at the film, not your paint.",
+    bullets: [
+      "Self-healing clear film",
+      "Front-end and full-body coverage",
+      "Blocks rock chips & road debris",
+      "Multi-year warranty",
+    ],
+    price: "Quoted by coverage area",
     accent: "#22c55e",
+  },
+  {
+    id: "wraps",
+    title: "Custom Vehicle Wraps",
+    icon: "Building",
+    page: "wraps",
+    img: "/media/wraps/stormz.jpg",
+    headline: "Turn heads — or turn a profit.",
+    blurb: "Full and partial custom wraps for commercial fleets, trailers, vans, and personal vehicles — designed, printed, and installed in-house.",
+    bullets: [
+      "Commercial fleet & trailer wraps",
+      "Color-change and partial wraps",
+      "Designed and printed in-house",
+      "Clean, warrantied install",
+    ],
+    price: "Quoted by vehicle & design",
+    accent: "#f97316",
+  },
+  {
+    id: "correction",
+    title: "Paint Correction",
+    icon: "Wand",
+    img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=85&auto=format&fit=crop",
+    headline: "Bring back the depth and gloss.",
+    blurb: "Multi-stage machine polishing that removes swirls, scratches, and oxidation — restoring a deep, mirror-like finish before coating or sealing.",
+    bullets: [
+      "Removes swirls & light scratches",
+      "1- and 2-stage correction",
+      "Perfect prep for ceramic or sealant",
+      "Show-quality gloss",
+    ],
+    price: "Quoted by paint condition",
+    accent: "#a855f7",
+  },
+  {
+    id: "powder",
+    title: "Powder Coating",
+    icon: "Flame",
+    img: "https://images.unsplash.com/photo-1568605114849-c4f5b8bff0f3?w=1200&q=85&auto=format&fit=crop",
+    headline: "A finish that fights back.",
+    blurb: "Durable, chip- and corrosion-resistant powder coating for wheels, brackets, bumpers, and trim — baked on for a finish far tougher than paint.",
+    bullets: [
+      "Wheels, trim & hardware",
+      "Chip- and rust-resistant",
+      "Huge color & texture range",
+      "Baked-on durability",
+    ],
+    price: "Quoted by piece count",
+    accent: "#eab308",
   },
 ];
 
 function ServicesPage({ setPage }) {
-  const iconMap = { Droplet, CarFront, Wrench, Sparkles, Truck };
+  const iconMap = { Droplet, Sparkles, Sun, Shield, Building, Wand, Flame };
   return (
     <div className="page-enter">
       <PageHeader
         eyebrow="Our services"
-        title="What we do, done right."
-        sub="We do one thing — restore your vehicle to its factory state — and we do it relentlessly well. Every repair is panel-saving, insurance-approved, and warrantied for life."
+        title="Everything we do, under one roof."
+        sub="From invisible hail repair to full custom wraps — detailing, window tint, paint protection, correction, and powder coating, all done in-house in McKinney."
       />
 
       <section style={{ padding: "40px 0 120px" }}>
@@ -98,8 +165,8 @@ function ServicesPage({ setPage }) {
                       </ul>
                       <div className="svc-row-foot">
                         <div className="svc-row-price">{s.price}</div>
-                        <button className="btn btn-primary" onClick={() => setPage("contact")}>
-                          Book this service <ArrowRight size={15}/>
+                        <button className="btn btn-primary" onClick={() => setPage(s.page || "contact")}>
+                          {s.page ? "Learn more" : "Book this service"} <ArrowRight size={15}/>
                         </button>
                       </div>
                     </div>
