@@ -183,8 +183,9 @@ function Footer({ setPage }) {
           <div>
             <h4 className="footer-h">Services</h4>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Hail Damage Repair</a>
-            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Door Ding Repair</a>
-            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Paintless Dent Repair</a>
+            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("detailing"); }}>Auto Detailing</a>
+            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("protection"); }}>Paint Protection</a>
+            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("wraps"); }}>Custom Vehicle Wraps</a>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Ceramic Coating</a>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Pickup &amp; Delivery</a>
           </div>

@@ -467,8 +467,8 @@ const FAQS = [
     a: "We&rsquo;re based in McKinney, TX and cover the entire DFW metroplex including Frisco, Plano, Allen, Prosper, Wylie, Richardson, Anna, Melissa, Celina, Little Elm, and Carrollton. Outside that radius we&rsquo;ll come to you for catastrophic storm work — just ask.",
   },
   {
-    q: "Can you fix a dent without insurance?",
-    a: "Absolutely. We offer flat per-panel pricing for door dings, parking-lot dents, and minor hail that doesn&rsquo;t warrant a claim. Single-panel repairs start at $125, with most jobs completed same-day at our shop.",
+    q: "Can I pay out of pocket instead of filing a claim?",
+    a: "Yes. If the hail damage is minor or you&rsquo;d rather not involve insurance, we&rsquo;ll give you an honest out-of-pocket quote at your free inspection — no pressure either way. Many smaller jobs are completed same-day at our McKinney shop.",
   },
 ];
 

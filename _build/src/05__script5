@@ -19,38 +19,6 @@ const DETAILED_SERVICES = [
     accent: "#e11d48",
   },
   {
-    id: "ding",
-    title: "Door Ding Repair",
-    icon: "CarFront",
-    img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=85&auto=format&fit=crop",
-    headline: "Parking-lot damage, gone in an afternoon.",
-    blurb: "Door dings, shopping cart hits, and minor creases handled quickly and affordably. Most single-panel repairs are completed same-day.",
-    bullets: [
-      "Same-day turnaround on most repairs",
-      "Single-panel pricing — no upsell",
-      "Original factory paint preserved",
-      "Mobile service available",
-    ],
-    price: "From $125 per panel",
-    accent: "#f97316",
-  },
-  {
-    id: "pdr",
-    title: "Paintless Dent Repair",
-    icon: "Wrench",
-    img: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=85&auto=format&fit=crop",
-    headline: "Master-level metal shaping.",
-    blurb: "Our lead techs each carry 10+ years of certified PDR experience. We restore creases, dings, and dents using specialty rods and reflection boards — preserving every square inch of your factory finish.",
-    bullets: [
-      "Certified by Vale Training Solutions",
-      "Aluminum panel certified (F-150, Range Rover)",
-      "Lifetime warranty",
-      "Faster, cheaper, and panel-saving vs. body shop",
-    ],
-    price: "Pricing varies by dent count and panel",
-    accent: "#eab308",
-  },
-  {
     id: "ceramic",
     title: "Ceramic Coating",
     icon: "Sparkles",
@@ -90,7 +58,7 @@ function ServicesPage({ setPage }) {
     <div className="page-enter">
       <PageHeader
         eyebrow="Our services"
-        title="Five services, one promise."
+        title="What we do, done right."
         sub="We do one thing — restore your vehicle to its factory state — and we do it relentlessly well. Every repair is panel-saving, insurance-approved, and warrantied for life."
       />
 

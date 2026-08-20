@@ -1040,20 +1040,6 @@ const SERVICES = [{
   blurb: "Paintless dent repair for hail damage of every scale — your panels saved, your factory finish intact.",
   accent: "#e11d48"
 }, {
-  id: "ding",
-  title: "Door Ding Repair",
-  icon: "CarFront",
-  img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=85&auto=format&fit=crop",
-  blurb: "Parking lot dings, runaway carts, careless neighbors. Quick fixes that vanish without a trace.",
-  accent: "#f97316"
-}, {
-  id: "pdr",
-  title: "Paintless Dent Repair",
-  icon: "Wrench",
-  img: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=85&auto=format&fit=crop",
-  blurb: "Factory paint stays put. We sculpt metal back to spec with specialty tools — no filler, no spray booth.",
-  accent: "#eab308"
-}, {
   id: "ceramic",
   title: "Ceramic Coating",
   icon: "Sparkles",

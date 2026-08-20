@@ -284,16 +284,23 @@ function Footer({
     href: "#",
     onClick: e => {
       e.preventDefault();
-      setPage("services");
+      setPage("detailing");
     }
-  }, "Door Ding Repair"), /*#__PURE__*/React.createElement("a", {
+  }, "Auto Detailing"), /*#__PURE__*/React.createElement("a", {
     className: "footer-link",
     href: "#",
     onClick: e => {
       e.preventDefault();
-      setPage("services");
+      setPage("protection");
     }
-  }, "Paintless Dent Repair"), /*#__PURE__*/React.createElement("a", {
+  }, "Paint Protection"), /*#__PURE__*/React.createElement("a", {
+    className: "footer-link",
+    href: "#",
+    onClick: e => {
+      e.preventDefault();
+      setPage("wraps");
+    }
+  }, "Custom Vehicle Wraps"), /*#__PURE__*/React.createElement("a", {
     className: "footer-link",
     href: "#",
     onClick: e => {

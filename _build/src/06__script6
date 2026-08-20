@@ -383,6 +383,37 @@ function PaintProtectionPage({ setPage }) {
         sub="Paint Protection Film and ceramic coating solve different problems — and they work best together. Here's the plain-English version, so you know exactly what you're paying for."
       />
 
+      {/* Recent work gallery */}
+      <section className="section" style={{ paddingBottom: 40 }}>
+        <div className="container">
+          <div className="section-head" style={{ alignItems: "center", textAlign: "center", margin: "0 auto 40px" }}>
+            <FadeIn><span className="chip">Recent work</span></FadeIn>
+            <FadeIn delay={80}><h2>Fresh out of the bay.</h2></FadeIn>
+          </div>
+          <div className="ppf-gallery">
+            {[
+              { img: "/media/ppf/tesla.jpg", label: "Tesla Model Y" },
+              { img: "/media/ppf/civic.jpg", label: "Honda Civic Type R" },
+              { img: "/media/ppf/audi.jpg", label: "Audi A5 Sportback" },
+              { img: "/media/ppf/truck.jpg", label: "Satin-finish truck" },
+            ].map((p, i) => (
+              <FadeIn key={i} delay={i * 60}>
+                <div className="ppf-shot card">
+                  <img src={p.img} alt={"Paint protection work — " + p.label} loading="lazy"/>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          .ppf-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+          .ppf-shot { padding: 0; overflow: hidden; aspect-ratio: 3 / 4; }
+          .ppf-shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s var(--ease); }
+          .ppf-shot:hover img { transform: scale(1.05); }
+          @media (max-width: 900px) { .ppf-gallery { grid-template-columns: 1fr 1fr; } }
+        `}</style>
+      </section>
+
       <section className="section">
         <div className="container">
           {/* PPF block */}
@@ -525,17 +556,6 @@ function PaintProtectionPage({ setPage }) {
                 </button>
               </div>
             </FadeIn>
-            <FadeIn delay={100}>
-              <div className="pp-price-card card featured">
-                <div className="pp-price-icon" style={{ background: "rgba(207,54,45,.14)", color: "var(--accent-hi)" }}><Shield size={22}/></div>
-                <div className="pp-price-name">Paint Protection Film</div>
-                <div className="pp-price-amt"><span>starting at</span> $799</div>
-                <div className="pp-price-note">Partial front coverage — bumper, hood edge, mirrors</div>
-                <button className="btn btn-primary" style={{ width: "100%", marginTop: 18 }} onClick={() => setPage("contact")}>
-                  Request a quote <ArrowRight size={14}/>
-                </button>
-              </div>
-            </FadeIn>
           </div>
           <p className="detail-footnote">
             Pricing varies by vehicle, coverage area, and condition. Full-front and full-body
@@ -670,8 +690,8 @@ function PaintProtectionPage({ setPage }) {
         .sweet-spot strong { color: var(--fg); }
 
         .pp-pricing {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-          max-width: 760px; margin: 0 auto;
+          display: grid; grid-template-columns: 1fr; gap: 18px;
+          max-width: 400px; margin: 0 auto;
         }
         .pp-price-card {
           padding: 32px;

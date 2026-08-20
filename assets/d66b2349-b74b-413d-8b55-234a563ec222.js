@@ -371,6 +371,53 @@ function PaintProtectionPage({
     title: "Two kinds of armor for your paint.",
     sub: "Paint Protection Film and ceramic coating solve different problems — and they work best together. Here's the plain-English version, so you know exactly what you're paying for."
   }), /*#__PURE__*/React.createElement("section", {
+    className: "section",
+    style: {
+      paddingBottom: 40
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "section-head",
+    style: {
+      alignItems: "center",
+      textAlign: "center",
+      margin: "0 auto 40px"
+    }
+  }, /*#__PURE__*/React.createElement(FadeIn, null, /*#__PURE__*/React.createElement("span", {
+    className: "chip"
+  }, "Recent work")), /*#__PURE__*/React.createElement(FadeIn, {
+    delay: 80
+  }, /*#__PURE__*/React.createElement("h2", null, "Fresh out of the bay."))), /*#__PURE__*/React.createElement("div", {
+    className: "ppf-gallery"
+  }, [{
+    img: "/media/ppf/tesla.jpg",
+    label: "Tesla Model Y"
+  }, {
+    img: "/media/ppf/civic.jpg",
+    label: "Honda Civic Type R"
+  }, {
+    img: "/media/ppf/audi.jpg",
+    label: "Audi A5 Sportback"
+  }, {
+    img: "/media/ppf/truck.jpg",
+    label: "Satin-finish truck"
+  }].map((p, i) => /*#__PURE__*/React.createElement(FadeIn, {
+    key: i,
+    delay: i * 60
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ppf-shot card"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: p.img,
+    alt: "Paint protection work — " + p.label,
+    loading: "lazy"
+  })))))), /*#__PURE__*/React.createElement("style", null, `
+          .ppf-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+          .ppf-shot { padding: 0; overflow: hidden; aspect-ratio: 3 / 4; }
+          .ppf-shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s var(--ease); }
+          .ppf-shot:hover img { transform: scale(1.05); }
+          @media (max-width: 900px) { .ppf-gallery { grid-template-columns: 1fr 1fr; } }
+        `)), /*#__PURE__*/React.createElement("section", {
     className: "section"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
@@ -604,33 +651,6 @@ function PaintProtectionPage({
     onClick: () => setPage("contact")
   }, "Request a quote ", /*#__PURE__*/React.createElement(ArrowRight, {
     size: 14
-  })))), /*#__PURE__*/React.createElement(FadeIn, {
-    delay: 100
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pp-price-card card featured"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pp-price-icon",
-    style: {
-      background: "rgba(207,54,45,.14)",
-      color: "var(--accent-hi)"
-    }
-  }, /*#__PURE__*/React.createElement(Shield, {
-    size: 22
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "pp-price-name"
-  }, "Paint Protection Film"), /*#__PURE__*/React.createElement("div", {
-    className: "pp-price-amt"
-  }, /*#__PURE__*/React.createElement("span", null, "starting at"), " $799"), /*#__PURE__*/React.createElement("div", {
-    className: "pp-price-note"
-  }, "Partial front coverage — bumper, hood edge, mirrors"), /*#__PURE__*/React.createElement("button", {
-    className: "btn btn-primary",
-    style: {
-      width: "100%",
-      marginTop: 18
-    },
-    onClick: () => setPage("contact")
-  }, "Request a quote ", /*#__PURE__*/React.createElement(ArrowRight, {
-    size: 14
   }))))), /*#__PURE__*/React.createElement("p", {
     className: "detail-footnote"
   }, "Pricing varies by vehicle, coverage area, and condition. Full-front and full-body packages quoted on inspection. Contact us for an exact quote."))), /*#__PURE__*/React.createElement(FinalCTA, {
@@ -759,8 +779,8 @@ function PaintProtectionPage({
         .sweet-spot strong { color: var(--fg); }
 
         .pp-pricing {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-          max-width: 760px; margin: 0 auto;
+          display: grid; grid-template-columns: 1fr; gap: 18px;
+          max-width: 400px; margin: 0 auto;
         }
         .pp-price-card {
           padding: 32px;
