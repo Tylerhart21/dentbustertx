@@ -229,7 +229,6 @@ function HomePage({ setPage, tweaks }) {
       </section>
 
       <ServiceAreas />
-      <MeetTheTeam setPage={setPage} />
       <FAQ />
 
       <FinalCTA setPage={setPage} />

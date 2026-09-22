@@ -401,17 +401,6 @@ function Hero({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hero-stat-num mono"
   }, /*#__PURE__*/React.createElement(Counter, {
-    to: 2400,
-    suffix: "+"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "hero-stat-lbl"
-  }, "Vehicles repaired")), /*#__PURE__*/React.createElement("div", {
-    className: "hero-stat-divider"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "hero-stat"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hero-stat-num mono"
-  }, /*#__PURE__*/React.createElement(Counter, {
     to: 5.0,
     decimals: 1
   })), /*#__PURE__*/React.createElement("div", {
@@ -441,7 +430,7 @@ function Hero({
     className: "hero-marquee"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hero-marquee-track"
-  }, ["Insurance approved", "Lifetime warranty", "Paintless dent repair", "$0 out of pocket", "Free pickup & delivery", "Texas owned & operated", "100+ five-star reviews", "Ceramic coating"].concat(["Insurance approved", "Lifetime warranty", "Paintless dent repair", "$0 out of pocket", "Free pickup & delivery", "Texas owned & operated", "100+ five-star reviews", "Ceramic coating"]).map((t, i) => /*#__PURE__*/React.createElement("span", {
+  }, ["Lifetime warranty", "Paintless dent repair", "$0 out of pocket", "Free pickup & delivery", "Texas owned & operated", "120+ five-star reviews", "Ceramic coating"].concat(["Lifetime warranty", "Paintless dent repair", "$0 out of pocket", "Free pickup & delivery", "Texas owned & operated", "120+ five-star reviews", "Ceramic coating"]).map((t, i) => /*#__PURE__*/React.createElement("span", {
     key: i,
     className: "hero-marquee-item"
   }, t, /*#__PURE__*/React.createElement("span", {
@@ -1374,12 +1363,8 @@ function ProcessPreview({
 /* ------ Insurance bar ------ */
 function InsuranceBar() {
   const items = [{
-    icon: "ShieldCheck",
-    title: "Insurance Approved",
-    sub: "Direct billing with every major insurer"
-  }, {
     icon: "ThumbsUp",
-    title: "100+ Five-Star Reviews",
+    title: "120+ Five-Star Reviews",
     sub: "Verified Google reviews across DFW"
   }, {
     icon: "Trophy",
@@ -1424,7 +1409,7 @@ function InsuranceBar() {
       className: "ins-sub"
     }, it.sub)));
   })), /*#__PURE__*/React.createElement("style", null, `
-          .ins-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+          .ins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 900px; margin: 0 auto; }
           .ins-item { display: flex; gap: 14px; align-items: center; }
           .ins-icon {
             width: 44px; height: 44px; border-radius: 10px;
@@ -1448,19 +1433,11 @@ function InsuranceBar() {
 /* ------ Stats with counters ------ */
 function StatsBand() {
   const stats = [{
-    num: 2400,
+    num: 15,
     suffix: "+",
-    label: "Vehicles repaired"
+    label: "Years of tech experience"
   }, {
-    num: 100,
-    suffix: "%",
-    label: "Insurance approved"
-  }, {
-    num: 12,
-    suffix: " yrs",
-    label: "DFW experience"
-  }, {
-    num: 4.9,
+    num: 5.0,
     decimals: 1,
     label: "Google rating"
   }];
@@ -1487,7 +1464,7 @@ function StatsBand() {
   })), /*#__PURE__*/React.createElement("div", {
     className: "stat-lbl"
   }, s.label))))), /*#__PURE__*/React.createElement("style", null, `
-          .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+          .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 640px; margin: 0 auto; }
           .stat-card {
             padding: 32px;
             background: var(--bg-2);

@@ -6,9 +6,13 @@ const DAMAGE_TYPES = [
   { id: "hail", label: "Hail damage", icon: "Droplet", desc: "Multiple small dents, recent storm" },
   { id: "ding", label: "Door dings", icon: "CarFront", desc: "Parking lot, single panel" },
   { id: "dent", label: "Larger dent or crease", icon: "Wrench", desc: "Single significant impact" },
-  { id: "ceramic", label: "Ceramic coating only", icon: "Sparkles", desc: "No damage — protection request" },
+  { id: "detailing", label: "Detailing", icon: "Sparkles", desc: "Interior, exterior, or full detail" },
+  { id: "tint", label: "Window tint", icon: "Sun", desc: "Heat, UV, and glare film" },
+  { id: "ppf", label: "Paint protection (PPF)", icon: "Shield", desc: "Clear film or ceramic coating" },
   { id: "other", label: "Not sure", icon: "MessageSquare", desc: "We&rsquo;ll figure it out together" },
 ];
+
+const SEVERITY_TYPES = ["hail", "ding", "dent"];
 
 const SEVERITY = [
   { id: "minor", label: "Minor", desc: "1–5 small dents, single panel" },
@@ -65,8 +69,8 @@ function BookingWizard({ embedded = false }) {
       if (!data.model.trim()) e.model = "Required";
     }
     if (step === 1) {
-      if (!data.damageType) e.damageType = "Choose a damage type";
-      if (!data.severity) e.severity = "Choose a severity";
+      if (!data.damageType) e.damageType = "Choose an option";
+      if (SEVERITY_TYPES.includes(data.damageType) && !data.severity) e.severity = "Choose a severity";
     }
     if (step === 2) {
       if (!data.name.trim()) e.name = "Required";
@@ -320,7 +324,7 @@ function StepVehicle({ data, set, errors }) {
 
 /* Step 2 — Damage */
 function StepDamage({ data, set, merge, errors }) {
-  const iconMap = { Droplet, CarFront, Wrench, Sparkles, MessageSquare };
+  const iconMap = { Droplet, CarFront, Wrench, Sparkles, MessageSquare, Sun, Shield };
 
   const onDrop = (files) => {
     const list = Array.from(files).slice(0, 6 - data.photos.length).map(f => ({
@@ -336,10 +340,10 @@ function StepDamage({ data, set, merge, errors }) {
 
   return (
     <div>
-      <StepHeader n="02" title="What kind of damage?" sub="The more we know now, the more accurate our estimate will be. Photos help us a lot." />
+      <StepHeader n="02" title="What can we help with?" sub="The more we know now, the more accurate our estimate will be. Photos help us a lot." />
 
       <div className="field" style={{ marginBottom: 24 }}>
-        <label>Damage type</label>
+        <label>What do you need?</label>
         {errors.damageType && <div className="field-err">{errors.damageType}</div>}
         <div className="damage-grid">
           {DAMAGE_TYPES.map(t => {
@@ -360,22 +364,24 @@ function StepDamage({ data, set, merge, errors }) {
         </div>
       </div>
 
-      <div className="field" style={{ marginBottom: 24 }}>
-        <label>How extensive is the damage?</label>
-        {errors.severity && <div className="field-err">{errors.severity}</div>}
-        <div className="severity-grid">
-          {SEVERITY.map(s => {
-            const active = data.severity === s.id;
-            return (
-              <button key={s.id} className={"severity-btn" + (active ? " active" : "")}
-                onClick={() => set("severity", s.id)} type="button">
-                <div className="severity-btn-title">{s.label}</div>
-                <div className="severity-btn-desc" dangerouslySetInnerHTML={{ __html: s.desc }}/>
-              </button>
-            );
-          })}
+      {SEVERITY_TYPES.includes(data.damageType) && (
+        <div className="field" style={{ marginBottom: 24 }}>
+          <label>How extensive is the damage?</label>
+          {errors.severity && <div className="field-err">{errors.severity}</div>}
+          <div className="severity-grid">
+            {SEVERITY.map(s => {
+              const active = data.severity === s.id;
+              return (
+                <button key={s.id} className={"severity-btn" + (active ? " active" : "")}
+                  onClick={() => set("severity", s.id)} type="button">
+                  <div className="severity-btn-title">{s.label}</div>
+                  <div className="severity-btn-desc" dangerouslySetInnerHTML={{ __html: s.desc }}/>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       <PhotoDropzone photos={data.photos} onDrop={onDrop} onRemove={removePhoto}/>
 
@@ -915,7 +921,7 @@ function ContactPage() {
                   5.0 from 120 Google reviews
                 </div>
                 <div style={{ color: "var(--fg-2)", fontSize: 13, marginTop: 6 }}>
-                  Lifetime warranty · Insurance approved · $0 out of pocket
+                  Lifetime warranty · $0 out of pocket
                 </div>
               </div>
             </div>

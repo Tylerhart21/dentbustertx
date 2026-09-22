@@ -18,16 +18,27 @@ const DAMAGE_TYPES = [{
   icon: "Wrench",
   desc: "Single significant impact"
 }, {
-  id: "ceramic",
-  label: "Ceramic coating only",
+  id: "detailing",
+  label: "Detailing",
   icon: "Sparkles",
-  desc: "No damage — protection request"
+  desc: "Interior, exterior, or full detail"
+}, {
+  id: "tint",
+  label: "Window tint",
+  icon: "Sun",
+  desc: "Heat, UV, and glare film"
+}, {
+  id: "ppf",
+  label: "Paint protection (PPF)",
+  icon: "Shield",
+  desc: "Clear film or ceramic coating"
 }, {
   id: "other",
   label: "Not sure",
   icon: "MessageSquare",
   desc: "We&rsquo;ll figure it out together"
 }];
+const SEVERITY_TYPES = ["hail", "ding", "dent"];
 const SEVERITY = [{
   id: "minor",
   label: "Minor",
@@ -95,8 +106,8 @@ function BookingWizard({
       if (!data.model.trim()) e.model = "Required";
     }
     if (step === 1) {
-      if (!data.damageType) e.damageType = "Choose a damage type";
-      if (!data.severity) e.severity = "Choose a severity";
+      if (!data.damageType) e.damageType = "Choose an option";
+      if (SEVERITY_TYPES.includes(data.damageType) && !data.severity) e.severity = "Choose a severity";
     }
     if (step === 2) {
       if (!data.name.trim()) e.name = "Required";
@@ -405,7 +416,9 @@ function StepDamage({
     CarFront,
     Wrench,
     Sparkles,
-    MessageSquare
+    MessageSquare,
+    Sun,
+    Shield
   };
   const onDrop = files => {
     const list = Array.from(files).slice(0, 6 - data.photos.length).map(f => ({
@@ -419,14 +432,14 @@ function StepDamage({
   const removePhoto = id => set("photos", data.photos.filter(p => p.id !== id));
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(StepHeader, {
     n: "02",
-    title: "What kind of damage?",
+    title: "What can we help with?",
     sub: "The more we know now, the more accurate our estimate will be. Photos help us a lot."
   }), /*#__PURE__*/React.createElement("div", {
     className: "field",
     style: {
       marginBottom: 24
     }
-  }, /*#__PURE__*/React.createElement("label", null, "Damage type"), errors.damageType && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("label", null, "What do you need?"), errors.damageType && /*#__PURE__*/React.createElement("div", {
     className: "field-err"
   }, errors.damageType), /*#__PURE__*/React.createElement("div", {
     className: "damage-grid"
@@ -453,7 +466,7 @@ function StepDamage({
       stroke: "var(--accent-hi)",
       strokeWidth: 2.4
     }));
-  }))), /*#__PURE__*/React.createElement("div", {
+  }))), SEVERITY_TYPES.includes(data.damageType) && /*#__PURE__*/React.createElement("div", {
     className: "field",
     style: {
       marginBottom: 24
@@ -1176,7 +1189,7 @@ function ContactPage() {
       fontSize: 13,
       marginTop: 6
     }
-  }, "Lifetime warranty · Insurance approved · $0 out of pocket"))), /*#__PURE__*/React.createElement("div", {
+  }, "Lifetime warranty · $0 out of pocket"))), /*#__PURE__*/React.createElement("div", {
     className: "contact-main"
   }, /*#__PURE__*/React.createElement(BookingWizard, null)))), /*#__PURE__*/React.createElement("style", null, `
           .contact-grid {

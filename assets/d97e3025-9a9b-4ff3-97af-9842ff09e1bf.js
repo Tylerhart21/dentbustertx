@@ -344,9 +344,7 @@ function HomePage({
     onClick: () => setPage("reviews")
   }, "See all reviews ", /*#__PURE__*/React.createElement(ArrowRight, {
     size: 15
-  }))))), /*#__PURE__*/React.createElement(ServiceAreas, null), /*#__PURE__*/React.createElement(MeetTheTeam, {
-    setPage: setPage
-  }), /*#__PURE__*/React.createElement(FAQ, null), /*#__PURE__*/React.createElement(FinalCTA, {
+  }))))), /*#__PURE__*/React.createElement(ServiceAreas, null), /*#__PURE__*/React.createElement(FAQ, null), /*#__PURE__*/React.createElement(FinalCTA, {
     setPage: setPage
   }));
 }

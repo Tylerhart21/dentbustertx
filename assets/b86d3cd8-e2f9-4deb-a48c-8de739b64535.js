@@ -11,7 +11,7 @@ const NAV_ITEMS = [{
   label: "Detailing"
 }, {
   id: "protection",
-  label: "Paint Protection"
+  label: "PPF"
 }, {
   id: "wraps",
   label: "Wraps"
@@ -260,7 +260,7 @@ function Footer({
       fontSize: 12,
       color: "var(--fg-2)"
     }
-  }, "5.0 · 100+ Google reviews"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", {
+  }, "5.0 · 120+ Google reviews"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", {
     className: "footer-h"
   }, "Site"), NAV_ITEMS.map(it => /*#__PURE__*/React.createElement("a", {
     key: it.id,
@@ -293,7 +293,7 @@ function Footer({
       e.preventDefault();
       setPage("protection");
     }
-  }, "Paint Protection"), /*#__PURE__*/React.createElement("a", {
+  }, "PPF"), /*#__PURE__*/React.createElement("a", {
     className: "footer-link",
     href: "#",
     onClick: e => {

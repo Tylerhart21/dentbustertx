@@ -4,7 +4,7 @@ const NAV_ITEMS = [
   { id: "home", label: "Home" },
   { id: "services", label: "Services" },
   { id: "detailing", label: "Detailing" },
-  { id: "protection", label: "Paint Protection" },
+  { id: "protection", label: "PPF" },
   { id: "wraps", label: "Wraps" },
   { id: "process", label: "Process" },
   { id: "reviews", label: "Reviews" },
@@ -170,7 +170,7 @@ function Footer({ setPage }) {
             </p>
             <div style={{ display: "flex", gap: 4, marginTop: 16 }}>
               {[1,2,3,4,5].map(i => <Star key={i} size={14} stroke="#facc15" />)}
-              <span style={{ marginLeft: 6, fontSize: 12, color: "var(--fg-2)" }}>5.0 · 100+ Google reviews</span>
+              <span style={{ marginLeft: 6, fontSize: 12, color: "var(--fg-2)" }}>5.0 · 120+ Google reviews</span>
             </div>
           </div>
           <div>
@@ -184,7 +184,7 @@ function Footer({ setPage }) {
             <h4 className="footer-h">Services</h4>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Hail Damage Repair</a>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("detailing"); }}>Auto Detailing</a>
-            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("protection"); }}>Paint Protection</a>
+            <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("protection"); }}>PPF</a>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("wraps"); }}>Custom Vehicle Wraps</a>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Ceramic Coating</a>
             <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); setPage("services"); }}>Pickup &amp; Delivery</a>
