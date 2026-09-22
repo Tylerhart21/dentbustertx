@@ -206,7 +206,6 @@ function HomePage({ setPage, tweaks }) {
       <Hero setPage={setPage} />
       <InsuranceBar />
       <ServicesGrid setPage={setPage} />
-      <StatsBand />
       <ProcessPreview setPage={setPage} />
 
       <WhyPDR setPage={setPage} />
