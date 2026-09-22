@@ -3,7 +3,7 @@
 // Real customer reviews live on the Google Business Profile. Until the owner
 // supplies the specific quotes he wants featured, we point visitors straight
 // to Google rather than displaying placeholder testimonials.
-const GOOGLE_REVIEWS_URL = "https://www.google.com/search?q=Dent+Busters+Auto+Hail+Repair+McKinney+TX+reviews";
+const GOOGLE_REVIEWS_URL = "https://www.google.com/maps?cid=5144023372298085885";
 const REVIEWS = [];
 function GoogleReviewsCTA({
   compact
